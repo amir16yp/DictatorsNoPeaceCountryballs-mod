@@ -5,6 +5,7 @@ I cannot publish the source, since it is essentially a modified `Assembly-CSharp
 # Features
 - The mouse panning speed being slow problem is fixed, one could also adjust the mouse panning speed by editing a file named `mouse_speed.mod` in the game's persistent storage folder (`%USERPROFILE%\AppData\LocalLow\AarJeeBee\DictatorsNoPeaceCountryballs`)
 - Country stats and saves are now editable. .dat files were migrated to json files. edit away!
+- Cheats! press the tilda (`~`) key to bring up the cheat console. various cheats such as adding gold, godmode (will always win wars), colonizing countries without starting a war, discovering countries (or all countries). type `help` in the cheat console for more info on usage
 # Install
 extract the zip file from the releases page to the games binary folder (`C:\Program Files (x86)\Steam\steamapps\common\DictatorsNoPeaceCountryballs`) and replace any files if it asks
 # Future
