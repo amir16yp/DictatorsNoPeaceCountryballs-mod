@@ -1,0 +1,46 @@
+--- decompiled_assembly/Assembly-CSharp/TempPath.cs	2024-08-25 01:50:00.728210400 +0300
++++ work/Assembly-CSharp/TempPath.cs	2024-08-25 01:50:01.243211100 +0300
+@@ -32,25 +32,26 @@
+ 
+ 	public void CreatePath(List<Vector3> createPath)
+ 	{
+-		if (!this.created && createPath.Count > 1)
++		if (this.created || createPath.Count <= 1)
+ 		{
+-			this.created = true;
+-			Vector3 vector = default(Vector3);
+-			Vector3 vector2 = default(Vector3);
+-			for (int i = 0; i < createPath.Count - 1; i++)
++			return;
++		}
++		this.created = true;
++		Vector3 vector = default(Vector3);
++		Vector3 vector2 = default(Vector3);
++		for (int i = 0; i < createPath.Count - 1; i++)
++		{
++			Vector3 vector3 = createPath[i];
++			vector = createPath[i + 1];
++			Vector3 normalized = (vector3 - vector).normalized;
++			int num = (int)(Vector3.Distance(vector3, vector) / this.scale);
++			float num2 = 0f;
++			for (int j = 0; j <= num; j++)
+ 			{
+-				Vector3 vector3 = createPath[i];
+-				vector = createPath[i + 1];
+-				Vector3 normalized = (vector3 - vector).normalized;
+-				int num = (int)(Vector3.Distance(vector3, vector) / this.scale);
+-				float num2 = 0f;
+-				for (int j = 0; j <= num; j++)
+-				{
+-					vector2 = vector + normalized * num2;
+-					GameObject gameObject = Object.Instantiate<GameObject>(this.pathObjectPrefab, vector2, Quaternion.identity);
+-					this.path.Add(gameObject);
+-					num2 += this.scale;
+-				}
++				vector2 = vector + normalized * num2;
++				GameObject gameObject = Object.Instantiate<GameObject>(this.pathObjectPrefab, vector2, Quaternion.identity);
++				this.path.Add(gameObject);
++				num2 += this.scale;
+ 			}
+ 		}
+ 	}

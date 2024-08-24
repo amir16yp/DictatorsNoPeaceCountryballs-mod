@@ -1,0 +1,87 @@
+--- decompiled_assembly/Assembly-CSharp/SampleBuyItemPanel.cs	2024-08-25 01:50:00.657211100 +0300
++++ work/Assembly-CSharp/SampleBuyItemPanel.cs	2024-08-25 01:50:01.160210100 +0300
+@@ -13,13 +13,13 @@
+ 		this.item = item;
+ 		this.itemNameText.text = LocalizationManager.instance.GetLocalizedValue(item.itemName);
+ 		this.CPText.text = item.GetCostPrice().ToString();
+-		this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + 0;
++		this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + 0.ToString();
+ 		for (int i = 0; i < Caravan.instance.purchasedItemsList.Count; i++)
+ 		{
+ 			Item item2 = Caravan.instance.purchasedItemsList[i];
+ 			if (item.GetItemName().Equals(item2.GetItemName()))
+ 			{
+-				this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + item2.GetQuantity();
++				this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + item2.GetQuantity().ToString();
+ 				return;
+ 			}
+ 		}
+@@ -29,9 +29,9 @@
+ 	{
+ 		this.isAlreadyOwned = false;
+ 		float num = 1f;
+-		float.TryParse(this.CPText.text, out num);
++		float.TryParse(this.CPText.text, ref num);
+ 		int num2 = 1;
+-		int.TryParse(this.countText.text, out num2);
++		int.TryParse(this.countText.text, ref num2);
+ 		int num3 = (int)(CentralAdmin.instance.GetGold() / num);
+ 		if (num2 > num3)
+ 		{
+@@ -53,7 +53,7 @@
+ 				this.isAlreadyOwned = true;
+ 				int num5 = item.GetQuantity() + num2;
+ 				Caravan.instance.purchasedItemsList[i].SetQuantity(num5);
+-				this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + item.GetQuantity();
++				this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + item.GetQuantity().ToString();
+ 				break;
+ 			}
+ 		}
+@@ -61,7 +61,7 @@
+ 		{
+ 			this.item.SetQuantity(num2);
+ 			Caravan.instance.purchasedItemsList.Add(this.item);
+-			this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + this.item.GetQuantity();
++			this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + this.item.GetQuantity().ToString();
+ 		}
+ 	}
+ 
+@@ -69,18 +69,10 @@
+ 	{
+ 		this.isAlreadyOwned = false;
+ 		float num = 1f;
+-		float.TryParse(this.CPText.text, out num);
++		float.TryParse(this.CPText.text, ref num);
+ 		int num2 = (int)(CentralAdmin.instance.GetGold() / num);
+ 		int num3 = Caravan.instance.cargoCapacity - Caravan.instance.cargoFilled;
+-		int num4;
+-		if (num3 <= num2)
+-		{
+-			num4 = num3;
+-		}
+-		else
+-		{
+-			num4 = num2;
+-		}
++		int num4 = ((num3 > num2) ? num2 : num3);
+ 		CentralAdmin.instance.ReduceGold((float)num4 * num);
+ 		this.item.totalCost += (float)num4 * num;
+ 		Caravan.instance.cargoFilled += num4;
+@@ -92,7 +84,7 @@
+ 				this.isAlreadyOwned = true;
+ 				int num5 = item.GetQuantity() + num4;
+ 				Caravan.instance.purchasedItemsList[i].SetQuantity(num5);
+-				this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + item.GetQuantity();
++				this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + item.GetQuantity().ToString();
+ 				break;
+ 			}
+ 		}
+@@ -100,7 +92,7 @@
+ 		{
+ 			this.item.SetQuantity(num4);
+ 			Caravan.instance.purchasedItemsList.Add(this.item);
+-			this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + this.item.GetQuantity();
++			this.ownedText.text = LocalizationManager.instance.GetLocalizedValue("carg4") + this.item.GetQuantity().ToString();
+ 		}
+ 	}
+ 

@@ -1,0 +1,17 @@
+using System;
+
+public class ModCommand : ModCommandBase
+{
+	public ModCommand(string id, string description, string format, Action command)
+		: base(id, description, format)
+	{
+		this.command = command;
+	}
+
+	public void Invoke()
+	{
+		this.command.Invoke();
+	}
+
+	private Action command;
+}

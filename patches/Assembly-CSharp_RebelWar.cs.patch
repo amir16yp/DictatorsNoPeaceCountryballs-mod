@@ -1,0 +1,53 @@
+--- decompiled_assembly/Assembly-CSharp/RebelWar.cs	2024-08-25 01:50:00.630211600 +0300
++++ work/Assembly-CSharp/RebelWar.cs	2024-08-25 01:50:01.130210100 +0300
+@@ -96,28 +96,33 @@
+ 				return;
+ 			}
+ 		}
+-		else if (this.rebelWarStatus == RebelWarStatus.ATWAR)
++		else
+ 		{
++			if (this.rebelWarStatus != RebelWarStatus.ATWAR)
++			{
++				return;
++			}
+ 			this.currWarTimeCount += Time.deltaTime;
+-			if (this.currWarTimeCount >= this.warTimeFactor)
++			if (this.currWarTimeCount < this.warTimeFactor)
++			{
++				return;
++			}
++			this.currWarTimeCount = 0f;
++			this.warCountry.army.currentStrength -= 1f;
++			this.warCountry.rebel.currentStrength -= 1f;
++			this.warCountry.armyStarFilled.fillAmount = this.warCountry.army.currentStrength / 100f;
++			this.warCountry.rebelStarFilled.fillAmount = this.warCountry.rebel.currentStrength / 60f;
++			if (this.warCountry.army.currentStrength <= 0f || this.warCountry.rebel.currentStrength <= 0f)
+ 			{
+-				this.currWarTimeCount = 0f;
+-				this.warCountry.army.currentStrength -= 1f;
+-				this.warCountry.rebel.currentStrength -= 1f;
+-				this.warCountry.armyStarFilled.fillAmount = this.warCountry.army.currentStrength / 100f;
+-				this.warCountry.rebelStarFilled.fillAmount = this.warCountry.rebel.currentStrength / 60f;
+-				if (this.warCountry.army.currentStrength <= 0f || this.warCountry.rebel.currentStrength <= 0f)
++				if (this.warCountry.rebel.currentStrength <= 0f)
++				{
++					this.wonWar = true;
++				}
++				else
+ 				{
+-					if (this.warCountry.rebel.currentStrength <= 0f)
+-					{
+-						this.wonWar = true;
+-					}
+-					else
+-					{
+-						this.wonWar = false;
+-					}
+-					this.EndWar();
++					this.wonWar = false;
+ 				}
++				this.EndWar();
+ 			}
+ 		}
+ 	}

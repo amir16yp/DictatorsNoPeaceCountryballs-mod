@@ -1,0 +1,11 @@
+--- decompiled_assembly/Assembly-CSharp/NumPad.cs	2024-08-25 01:50:00.570210100 +0300
++++ work/Assembly-CSharp/NumPad.cs	2024-08-25 01:50:01.087211400 +0300
+@@ -38,7 +38,7 @@
+ 	{
+ 		if (this.countString.Length < 3)
+ 		{
+-			this.countString += pressed;
++			this.countString += pressed.ToString();
+ 		}
+ 		this.UpdateDisplayText();
+ 	}

@@ -1,0 +1,63 @@
+--- decompiled_assembly/Assembly-CSharp/CameraDrag.cs	2024-08-25 01:50:00.273209800 +0300
++++ work/Assembly-CSharp/CameraDrag.cs	2024-08-25 01:50:00.820210000 +0300
+@@ -11,32 +11,28 @@
+ 
+ 	private void Update()
+ 	{
+-		if (UIControl.instance.panEnabled)
++		if (!UIControl.instance.panEnabled)
+ 		{
+-			if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+-			{
+-				if (this.zoomSize > 1f)
+-				{
+-					this.zoomSize -= 1f;
+-				}
+-				base.GetComponent<Camera>().orthographicSize = this.zoomSize;
+-			}
+-			if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+-			{
+-				if (this.zoomSize < 40f)
+-				{
+-					this.zoomSize += 1f;
+-				}
+-				base.GetComponent<Camera>().orthographicSize = this.zoomSize;
+-			}
+-			if (Input.GetMouseButtonDown(0))
++			return;
++		}
++		if (Input.GetAxis("Mouse ScrollWheel") > 0f)
++		{
++			if (this.zoomSize > 1f)
+ 			{
+-				return;
++				this.zoomSize -= 5f;
+ 			}
+-			if (!Input.GetMouseButton(0))
++			base.GetComponent<Camera>().orthographicSize = this.zoomSize;
++		}
++		if (Input.GetAxis("Mouse ScrollWheel") < 0f)
++		{
++			if (this.zoomSize < 40f)
+ 			{
+-				return;
++				this.zoomSize += 5f;
+ 			}
++			base.GetComponent<Camera>().orthographicSize = this.zoomSize;
++		}
++		if (!Input.GetMouseButtonDown(0) && Input.GetMouseButton(0))
++		{
+ 			float num = Time.deltaTime * this.dragSpeed * Input.GetAxis("Mouse X");
+ 			float num2 = Time.deltaTime * this.dragSpeed * Input.GetAxis("Mouse Y");
+ 			Vector3 vector = new Vector3(num, num2, 0f);
+@@ -46,8 +42,8 @@
+ 
+ 	public CameraDrag()
+ 	{
+-		this.defaultDragSpeed = 1f;
+-		this.dragSpeed = 1f;
++		this.defaultDragSpeed = 3f;
++		this.dragSpeed = 10f;
+ 		this.zoomSize = 5f;
+ 		base..ctor();
+ 	}

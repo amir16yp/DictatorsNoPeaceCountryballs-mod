@@ -1,0 +1,400 @@
+--- decompiled_assembly/Assembly-CSharp/SaveSystem.cs	2024-08-25 01:50:00.692210000 +0300
++++ work/Assembly-CSharp/SaveSystem.cs	2024-08-25 01:50:01.208209700 +0300
+@@ -1,240 +1,286 @@
+ using System;
+ using System.IO;
+ using System.Runtime.Serialization.Formatters.Binary;
++using System.Runtime.Serialization.Json;
+ using UnityEngine;
+ 
+ public static class SaveSystem
+ {
++	public static void MigrateDatToJSON()
++	{
++		foreach (string text in Directory.GetFiles(Application.persistentDataPath, "*.dat"))
++		{
++			string text2 = Path.ChangeExtension(text, ".json");
++			if (File.Exists(text2))
++			{
++				global::Logger.ActiveLogger.Log(text2 + " already exists. Skipping migration.");
++			}
++			else
++			{
++				try
++				{
++					using (FileStream fileStream = File.OpenRead(text))
++					{
++						object obj = new BinaryFormatter().Deserialize(fileStream);
++						using (FileStream fileStream2 = File.Create(text2))
++						{
++							new DataContractJsonSerializer(obj.GetType()).WriteObject(fileStream2, obj);
++						}
++					}
++					global::Logger.ActiveLogger.Log("Migrated " + text + " to " + text2);
++				}
++				catch (Exception ex)
++				{
++					global::Logger.ActiveLogger.Log("Failed to migrate " + text + ": " + ex.Message);
++				}
++			}
++		}
++	}
++
+ 	public static void SaveLanguage(LanguageType languageSelected)
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/langSelected.dat", FileMode.Create);
+ 		LanguageData languageData = new LanguageData(languageSelected);
+-		binaryFormatter.Serialize(fileStream, languageData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(LanguageData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/langSelected.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, languageData);
++		}
+ 	}
+ 
+ 	public static LanguageData LoadLanguageData()
+ 	{
+-		string text = Application.persistentDataPath + "/langSelected.dat";
++		string text = Application.persistentDataPath + "/langSelected.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			LanguageData languageData = binaryFormatter.Deserialize(fileStream) as LanguageData;
+-			fileStream.Close();
+-			return languageData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(LanguageData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as LanguageData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void SaveProgress(bool progressStatus, int saveType)
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/saveProgress.dat", FileMode.Create);
+ 		SaveProgressData saveProgressData = new SaveProgressData(progressStatus, saveType);
+-		binaryFormatter.Serialize(fileStream, saveProgressData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(SaveProgressData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/saveProgress.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, saveProgressData);
++		}
+ 	}
+ 
+ 	public static SaveProgressData LoadSaveProgress()
+ 	{
+-		string text = Application.persistentDataPath + "/saveProgress.dat";
++		string text = Application.persistentDataPath + "/saveProgress.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			SaveProgressData saveProgressData = binaryFormatter.Deserialize(fileStream) as SaveProgressData;
+-			fileStream.Close();
+-			return saveProgressData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(SaveProgressData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as SaveProgressData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void SaveCentralAdmin()
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/centralAdminData.dat", FileMode.Create);
+ 		CentralAdminData centralAdminData = new CentralAdminData();
+-		binaryFormatter.Serialize(fileStream, centralAdminData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CentralAdminData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/centralAdminData.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, centralAdminData);
++		}
+ 	}
+ 
+ 	public static CentralAdminData LoadCentralAdmin()
+ 	{
+-		string text = Application.persistentDataPath + "/centralAdminData.dat";
++		string text = Application.persistentDataPath + "/centralAdminData.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			CentralAdminData centralAdminData = binaryFormatter.Deserialize(fileStream) as CentralAdminData;
+-			fileStream.Close();
+-			return centralAdminData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CentralAdminData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as CentralAdminData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void SaveMilitaryData()
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/militaryData.dat", FileMode.Create);
+ 		MilitaryData militaryData = new MilitaryData();
+-		binaryFormatter.Serialize(fileStream, militaryData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(MilitaryData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/militaryData.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, militaryData);
++		}
+ 	}
+ 
+ 	public static MilitaryData LoadMilitaryData()
+ 	{
+-		string text = Application.persistentDataPath + "/militaryData.dat";
++		string text = Application.persistentDataPath + "/militaryData.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			MilitaryData militaryData = binaryFormatter.Deserialize(fileStream) as MilitaryData;
+-			fileStream.Close();
+-			return militaryData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(MilitaryData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as MilitaryData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void SaveCaravan()
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/caravanData.dat", FileMode.Create);
+ 		CaravanData caravanData = new CaravanData();
+-		binaryFormatter.Serialize(fileStream, caravanData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CaravanData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/caravanData.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, caravanData);
++		}
+ 	}
+ 
+ 	public static CaravanData LoadCaravanData()
+ 	{
+-		string text = Application.persistentDataPath + "/caravanData.dat";
++		string text = Application.persistentDataPath + "/caravanData.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			CaravanData caravanData = binaryFormatter.Deserialize(fileStream) as CaravanData;
+-			fileStream.Close();
+-			return caravanData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CaravanData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as CaravanData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void SaveCountry(Country country)
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/" + country.originalCountryName + ".dat", FileMode.Create);
+ 		CountryData countryData = new CountryData(country);
+-		binaryFormatter.Serialize(fileStream, countryData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CountryData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/" + country.originalCountryName + ".json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, countryData);
++		}
+ 	}
+ 
+ 	public static void SaveSpecialCountry(CountryData countryData)
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/" + CentralAdmin.instance.allCountries[countryData.id].originalCountryName + ".dat", FileMode.Create);
+-		binaryFormatter.Serialize(fileStream, countryData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CountryData));
++		string text = CentralAdmin.instance.allCountries[countryData.id].originalCountryName + ".json";
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/" + text))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, countryData);
++		}
+ 	}
+ 
+ 	public static CountryData LoadCountry(Country country)
+ 	{
+-		string text = Application.persistentDataPath + "/" + country.originalCountryName + ".dat";
++		string text = Application.persistentDataPath + "/" + country.originalCountryName + ".json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			CountryData countryData = binaryFormatter.Deserialize(fileStream) as CountryData;
+-			fileStream.Close();
+-			return countryData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CountryData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as CountryData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void MinimizedSaveCountry(Country country)
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/minimized" + country.originalCountryName + ".dat", FileMode.Create);
+ 		CountryData countryData = new CountryData(country);
+-		binaryFormatter.Serialize(fileStream, countryData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CountryData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/minimized" + country.originalCountryName + ".json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, countryData);
++		}
+ 	}
+ 
+ 	public static void MinimizedSaveSpecialCountry(CountryData countryData)
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/minimized" + CentralAdmin.instance.allCountries[countryData.id].originalCountryName + ".dat", FileMode.Create);
+-		binaryFormatter.Serialize(fileStream, countryData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CountryData));
++		string text = "/minimized" + CentralAdmin.instance.allCountries[countryData.id].originalCountryName + ".json";
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + text))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, countryData);
++		}
+ 	}
+ 
+ 	public static CountryData MinimizedLoadCountry(Country country)
+ 	{
+-		string text = Application.persistentDataPath + "/minimized" + country.originalCountryName + ".dat";
++		string text = Application.persistentDataPath + "/minimized" + country.originalCountryName + ".json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			CountryData countryData = binaryFormatter.Deserialize(fileStream) as CountryData;
+-			fileStream.Close();
+-			return countryData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CountryData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as CountryData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void MinimizedSaveCentralAdmin()
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/minimizedcentralAdminData.dat", FileMode.Create);
+ 		CentralAdminData centralAdminData = new CentralAdminData();
+-		binaryFormatter.Serialize(fileStream, centralAdminData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CentralAdminData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/minimizedcentralAdminData.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, centralAdminData);
++		}
+ 	}
+ 
+ 	public static CentralAdminData MinimizedLoadCentralAdmin()
+ 	{
+-		string text = Application.persistentDataPath + "/minimizedcentralAdminData.dat";
++		string text = Application.persistentDataPath + "/minimizedcentralAdminData.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			CentralAdminData centralAdminData = binaryFormatter.Deserialize(fileStream) as CentralAdminData;
+-			fileStream.Close();
+-			return centralAdminData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CentralAdminData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as CentralAdminData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void MinimizedSaveMilitaryData()
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/minimizedmilitaryData.dat", FileMode.Create);
+ 		MilitaryData militaryData = new MilitaryData();
+-		binaryFormatter.Serialize(fileStream, militaryData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(MilitaryData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/minimizedmilitaryData.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, militaryData);
++		}
+ 	}
+ 
+ 	public static MilitaryData MinimizedLoadMilitaryData()
+ 	{
+-		string text = Application.persistentDataPath + "/minimizedmilitaryData.dat";
++		string text = Application.persistentDataPath + "/minimizedmilitaryData.json";
+ 		if (File.Exists(text))
+ 		{
+-			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
+-			MilitaryData militaryData = binaryFormatter.Deserialize(fileStream) as MilitaryData;
+-			fileStream.Close();
+-			return militaryData;
++			DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(MilitaryData));
++			using (FileStream fileStream = File.OpenRead(text))
++			{
++				return dataContractJsonSerializer.ReadObject(fileStream) as MilitaryData;
++			}
+ 		}
+ 		return null;
+ 	}
+ 
+ 	public static void MinimizedSaveCaravan()
+ 	{
+-		BinaryFormatter binaryFormatter = new BinaryFormatter();
+-		FileStream fileStream = new FileStream(Application.persistentDataPath + "/minimizedcaravanData.dat", FileMode.Create);
+ 		CaravanData caravanData = new CaravanData();
+-		binaryFormatter.Serialize(fileStream, caravanData);
+-		fileStream.Close();
++		DataContractJsonSerializer dataContractJsonSerializer = new DataContractJsonSerializer(typeof(CaravanData));
++		using (FileStream fileStream = File.Create(Application.persistentDataPath + "/minimizedcaravanData.json"))
++		{
++			dataContractJsonSerializer.WriteObject(fileStream, caravanData);
++		}
+ 	}
+ 
+ 	public static CaravanData MinimizedLoadCaravanData()
+@@ -243,7 +289,7 @@
+ 		if (File.Exists(text))
+ 		{
+ 			BinaryFormatter binaryFormatter = new BinaryFormatter();
+-			FileStream fileStream = new FileStream(text, FileMode.Open);
++			FileStream fileStream = new FileStream(text, 3);
+ 			CaravanData caravanData = binaryFormatter.Deserialize(fileStream) as CaravanData;
+ 			fileStream.Close();
+ 			return caravanData;

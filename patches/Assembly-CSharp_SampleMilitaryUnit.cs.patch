@@ -1,0 +1,99 @@
+--- decompiled_assembly/Assembly-CSharp/SampleMilitaryUnit.cs	2024-08-25 01:50:00.664210100 +0300
++++ work/Assembly-CSharp/SampleMilitaryUnit.cs	2024-08-25 01:50:01.171209700 +0300
+@@ -14,7 +14,7 @@
+ 		this.unitName.font = LocalizationManager.instance.selectedFont;
+ 		this.unitName.text = LocalizationManager.instance.GetLocalizedValue(unit.name);
+ 		this.unitCost.text = string.Concat(unit.cost);
+-		this.unitsOwned.text = unit.unitsOwned + "/" + unit.maxUnits;
++		this.unitsOwned.text = unit.unitsOwned.ToString() + "/" + unit.maxUnits.ToString();
+ 		if (unit.maxUnits == unit.unitsOwned)
+ 		{
+ 			this.hireButton.interactable = false;
+@@ -32,15 +32,7 @@
+ 	{
+ 		int num = this.unit.maxUnits - this.unit.unitsOwned;
+ 		int num2 = (int)(CentralAdmin.instance.GetGold() / this.unit.cost);
+-		int num3;
+-		if (num > num2)
+-		{
+-			num3 = num2;
+-		}
+-		else
+-		{
+-			num3 = num;
+-		}
++		int num3 = ((num <= num2) ? num : num2);
+ 		if (num3 == 0)
+ 		{
+ 			this.hireAllButton.interactable = false;
+@@ -48,14 +40,14 @@
+ 		}
+ 		this.hireAllButton.interactable = true;
+ 		this.hireAllCostText.text = ((float)num3 * this.unit.cost).ToString();
+-		this.hireAllCountText.text = num3.ToString() + "/" + (this.unit.maxUnits - this.unit.unitsOwned);
++		this.hireAllCountText.text = num3.ToString() + "/" + (this.unit.maxUnits - this.unit.unitsOwned).ToString();
+ 	}
+ 
+ 	public void Hire()
+ 	{
+ 		float cost = this.unit.cost;
+ 		int num = 1;
+-		int.TryParse(this.hireCountText.text, out num);
++		int.TryParse(this.hireCountText.text, ref num);
+ 		int num2 = this.unit.maxUnits - this.unit.unitsOwned;
+ 		int num3 = (int)(CentralAdmin.instance.GetGold() / cost);
+ 		if (num > num3)
+@@ -68,7 +60,7 @@
+ 		}
+ 		CentralAdmin.instance.ReduceGold((float)num * cost);
+ 		this.unit.unitsOwned += num;
+-		this.unitsOwned.text = this.unit.unitsOwned + "/" + this.unit.maxUnits;
++		this.unitsOwned.text = this.unit.unitsOwned.ToString() + "/" + this.unit.maxUnits.ToString();
+ 	}
+ 
+ 	public void HireAll()
+@@ -76,31 +68,23 @@
+ 		float cost = this.unit.cost;
+ 		int num = this.unit.maxUnits - this.unit.unitsOwned;
+ 		int num2 = (int)(CentralAdmin.instance.GetGold() / cost);
+-		int num3;
+-		if (num > num2)
+-		{
+-			num3 = num2;
+-		}
+-		else
+-		{
+-			num3 = num;
+-		}
++		int num3 = ((num <= num2) ? num : num2);
+ 		CentralAdmin.instance.ReduceGold((float)num3 * cost);
+ 		this.unit.unitsOwned += num3;
+-		this.unitsOwned.text = this.unit.unitsOwned + "/" + this.unit.maxUnits;
++		this.unitsOwned.text = this.unit.unitsOwned.ToString() + "/" + this.unit.maxUnits.ToString();
+ 	}
+ 
+ 	public void Retire()
+ 	{
+ 		int num = 1;
+-		int.TryParse(this.retireCountText.text, out num);
++		int.TryParse(this.retireCountText.text, ref num);
+ 		if (num > this.unit.unitsOwned)
+ 		{
+ 			num = this.unit.unitsOwned;
+ 		}
+ 		CentralAdmin.instance.AddGold((float)num * this.unit.cost);
+ 		this.unit.unitsOwned -= num;
+-		this.unitsOwned.text = this.unit.unitsOwned + "/" + this.unit.maxUnits;
++		this.unitsOwned.text = this.unit.unitsOwned.ToString() + "/" + this.unit.maxUnits.ToString();
+ 	}
+ 
+ 	private void Update()
+@@ -128,7 +112,7 @@
+ 			this.hireButton.gameObject.SetActive(true);
+ 			this.hireAllButton.gameObject.SetActive(true);
+ 		}
+-		this.unitsOwned.text = this.unit.unitsOwned + "/" + this.unit.maxUnits;
++		this.unitsOwned.text = this.unit.unitsOwned.ToString() + "/" + this.unit.maxUnits.ToString();
+ 		this.SetupHireAllText();
+ 		this.filledBar.fillAmount = (float)this.unit.unitsOwned / (float)this.unit.maxUnits;
+ 	}

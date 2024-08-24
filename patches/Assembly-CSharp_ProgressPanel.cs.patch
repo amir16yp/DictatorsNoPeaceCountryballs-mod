@@ -1,0 +1,17 @@
+--- decompiled_assembly/Assembly-CSharp/ProgressPanel.cs	2024-08-25 01:50:00.605212900 +0300
++++ work/Assembly-CSharp/ProgressPanel.cs	2024-08-25 01:50:01.105210200 +0300
+@@ -64,13 +64,7 @@
+ 		}
+ 		this.progressForeground.fillAmount = (float)CentralAdmin.instance.colonizedCountries.Count / (float)(CentralAdmin.instance.allCountries.Count - 1);
+ 		this.progressText.font = LocalizationManager.instance.selectedFont;
+-		this.progressText.text = string.Concat(new object[]
+-		{
+-			LocalizationManager.instance.GetLocalizedValue("conq"),
+-			CentralAdmin.instance.colonizedCountries.Count,
+-			"/",
+-			CentralAdmin.instance.allCountries.Count - 1
+-		});
++		this.progressText.text = LocalizationManager.instance.GetLocalizedValue("conq") + CentralAdmin.instance.colonizedCountries.Count.ToString() + "/" + (CentralAdmin.instance.allCountries.Count - 1).ToString();
+ 	}
+ 
+ 	public void CloseProgressPanel()

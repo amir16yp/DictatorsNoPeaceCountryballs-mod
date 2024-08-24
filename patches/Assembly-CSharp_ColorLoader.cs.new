@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+
+public class ColorLoader
+{
+	public static List<Color> LoadColorsFromFile()
+	{
+		List<Color> list = new List<Color>();
+		string text = Application.persistentDataPath + "/colors.txt";
+		if (File.Exists(text))
+		{
+			string[] array = File.ReadAllLines(text);
+			for (int i = 0; i < array.Length; i++)
+			{
+				string[] array2 = array[i].Split(',', 0);
+				float num;
+				float num2;
+				float num3;
+				if (array2.Length == 3 && float.TryParse(array2[0], ref num) && float.TryParse(array2[1], ref num2) && float.TryParse(array2[2], ref num3))
+				{
+					list.Add(new Color(num / 255f, num2 / 255f, num3 / 255f));
+				}
+			}
+		}
+		else
+		{
+			ColorLoader.CreateDefaultColorsFile(text);
+		}
+		return list;
+	}
+
+	private static void CreateDefaultColorsFile(string filePath)
+	{
+		List<Color> list = new List<Color>();
+		list.Add(new Color(1f, 0f, 0f));
+		list.Add(new Color(0f, 1f, 0f));
+		list.Add(new Color(0f, 0f, 1f));
+		List<Color> list2 = list;
+		using (StreamWriter streamWriter = new StreamWriter(filePath))
+		{
+			foreach (Color color in list2)
+			{
+				streamWriter.WriteLine(string.Format("{0},{1},{2}", color.r * 255f, color.g * 255f, color.b * 255f));
+			}
+		}
+		global::Logger.ActiveLogger.Log("Default 'colors.txt' file created in persistent data path.");
+	}
+
+	private struct ColorData
+	{
+		public float r;
+
+		public float g;
+
+		public float b;
+	}
+}

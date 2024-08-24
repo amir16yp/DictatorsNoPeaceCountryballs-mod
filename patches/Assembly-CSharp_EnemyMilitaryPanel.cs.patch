@@ -1,0 +1,57 @@
+--- decompiled_assembly/Assembly-CSharp/EnemyMilitaryPanel.cs	2024-08-25 01:50:00.362210100 +0300
++++ work/Assembly-CSharp/EnemyMilitaryPanel.cs	2024-08-25 01:50:00.914209700 +0300
+@@ -34,46 +34,46 @@
+ 	{
+ 		UIControl.instance.panEnabled = false;
+ 		this.armyStarFilled.fillAmount = this.country.army.currentStrength / 100f;
+-		this.armyStrengthText.text = string.Concat(new object[]
++		this.armyStrengthText.text = string.Concat(new string[]
+ 		{
+ 			this.strengthString,
+ 			" : ",
+ 			this.country.army.currentStrength.ToString("0.##"),
+ 			" / ",
+-			100f
++			100f.ToString()
+ 		});
+ 		if (this.country.localNavyButton)
+ 		{
+ 			this.navyStarFilled.fillAmount = this.country.navy.currentStrength / 100f;
+-			this.navyStrengthText.text = string.Concat(new object[]
++			this.navyStrengthText.text = string.Concat(new string[]
+ 			{
+ 				this.strengthString,
+ 				" : ",
+ 				this.country.navy.currentStrength.ToString("0.##"),
+ 				" / ",
+-				100f
++				100f.ToString()
+ 			});
+ 		}
+ 		else
+ 		{
+ 			this.navyStarFilled.fillAmount = 0f;
+-			this.navyStrengthText.text = this.strengthString + " :  0 / " + 100f;
++			this.navyStrengthText.text = this.strengthString + " :  0 / " + 100f.ToString();
+ 		}
+ 		if (this.country.localAirForceButton)
+ 		{
+ 			this.airForceStarFilled.fillAmount = this.country.airForce.currentStrength / 100f;
+-			this.airForceStrengthText.text = string.Concat(new object[]
++			this.airForceStrengthText.text = string.Concat(new string[]
+ 			{
+ 				this.strengthString,
+ 				" : ",
+ 				this.country.airForce.currentStrength.ToString("0.##"),
+ 				" / ",
+-				100f
++				100f.ToString()
+ 			});
+ 			return;
+ 		}
+ 		this.airForceStarFilled.fillAmount = 0f;
+-		this.airForceStrengthText.text = this.strengthString + " : 0 / " + 100f;
++		this.airForceStrengthText.text = this.strengthString + " : 0 / " + 100f.ToString();
+ 		if (this.country.countryStatus == CountryStatus.COLONIZED)
+ 		{
+ 			this.CloseEnemyMilitaryPanel();

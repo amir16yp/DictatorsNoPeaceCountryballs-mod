@@ -1,0 +1,28 @@
+--- decompiled_assembly/Assembly-CSharp/Caravan.cs	2024-08-25 01:50:00.286209800 +0300
++++ work/Assembly-CSharp/Caravan.cs	2024-08-25 01:50:00.834210100 +0300
+@@ -114,7 +114,6 @@
+ 				this.refreshList = true;
+ 			}
+ 			this.prevLocation = this.isAtLocation;
+-			return;
+ 		}
+ 	}
+ 
+@@ -142,7 +141,7 @@
+ 		this.saleStatus = SaleStatus.STARTED;
+ 		this.CalculateSaleProfitPercent();
+ 		float num2 = this.allItems[this.saleItemID].originalCostPrice - this.allItems[this.saleItemID].originalCostPrice * this.saleProfitPercent;
+-		messageInfo.message = string.Concat(new object[]
++		messageInfo.message = string.Concat(new string[]
+ 		{
+ 			LocalizationManager.instance.GetLocalizedValue("tra3"),
+ 			LocalizationManager.instance.GetLocalizedValue(this.marketCountries[this.saleCountryID].countryAb),
+@@ -151,7 +150,7 @@
+ 			LocalizationManager.instance.GetLocalizedValue(this.allItems[this.saleItemID].itemName),
+ 			"\n",
+ 			LocalizationManager.instance.GetLocalizedValue("tra5"),
+-			num2,
++			num2.ToString(),
+ 			" ",
+ 			LocalizationManager.instance.GetLocalizedValue("golM"),
+ 			"\n",

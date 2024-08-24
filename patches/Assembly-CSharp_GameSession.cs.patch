@@ -1,0 +1,653 @@
+--- decompiled_assembly/Assembly-CSharp/GameSession.cs	2024-08-25 01:50:00.413209800 +0300
++++ work/Assembly-CSharp/GameSession.cs	2024-08-25 01:50:00.958210500 +0300
+@@ -1,9 +1,4 @@
+ using System;
+-using System.Collections.Generic;
+-using System.Threading.Tasks;
+-using Firebase;
+-using Firebase.Analytics;
+-using Firebase.Auth;
+ using UnityEngine;
+ using UnityEngine.SceneManagement;
+ using UnityEngine.UI;
+@@ -75,569 +70,10 @@
+ 		int buildIndex = SceneManager.GetActiveScene().buildIndex;
+ 	}
+ 
+-	public void TempSignIn()
+-	{
+-		this.CreateNewUserAsync(this.email, this.password);
+-	}
+-
+-	private void CreateRandomUser()
+-	{
+-		this.email = "userLeft" + Random.Range(0, 10000).ToString() + "@dictators.com";
+-		this.password = "samepasswordforall";
+-	}
+-
+-	protected void InitializeFirebase()
+-	{
+-		this.DebugLog("Setting up Firebase Auth");
+-		this.auth = FirebaseAuth.DefaultInstance;
+-		this.auth.StateChanged += this.AuthStateChanged;
+-		this.auth.IdTokenChanged += this.IdTokenChanged;
+-		this.AuthStateChanged(this, null);
+-		FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+-		this.DebugLog("Set user properties.");
+-		FirebaseAnalytics.SetUserProperty(FirebaseAnalytics.UserPropertySignUpMethod, "Google");
+-	}
+-
+-	public void CheckInternetConnection()
+-	{
+-		if (!this.userCreated)
+-		{
+-			this.CreateNewUserAsync(this.email, this.password);
+-			if (this.userCreated)
+-			{
+-				this.userCreateAttempts = 0;
+-				this.connectionStatus = true;
+-				this.connectionTimer = 0f;
+-				this.checkTime = this.connectedBufferTime;
+-			}
+-			else if (this.userCreateAttempts > this.maxUserCreateAttempts)
+-			{
+-				this.userCreateAttempts = 0;
+-				this.connectionStatus = false;
+-				this.connectionTimer = 0f;
+-				this.checkTime = this.disconnectedBufferTime;
+-				this.OpenNoConnectionPanel();
+-			}
+-			else
+-			{
+-				this.connectionTimer = 0f;
+-				this.checkTime = this.disconnectedBufferTime;
+-			}
+-			this.userCreateAttempts++;
+-			return;
+-		}
+-		this.SigninAsync(this.email, this.password);
+-		this.signInAttempts++;
+-		if (this.isSignedIn)
+-		{
+-			this.signInAttempts = 0;
+-			this.connectionStatus = true;
+-			this.connectionTimer = 0f;
+-			this.checkTime = this.connectedBufferTime;
+-			return;
+-		}
+-		if (this.signInAttempts > this.maxSignInAttempts)
+-		{
+-			this.signInAttempts = 0;
+-			this.connectionStatus = false;
+-			this.connectionTimer = 0f;
+-			this.checkTime = this.disconnectedBufferTime;
+-			this.OpenNoConnectionPanel();
+-			return;
+-		}
+-		this.connectionTimer = 0f;
+-		this.checkTime = this.disconnectedBufferTime;
+-	}
+-
+-	public void OpenNoConnectionPanel()
+-	{
+-		if (SceneManager.GetActiveScene().buildIndex == 1)
+-		{
+-			this.checkTime = this.disconnectedBufferTime * 5f;
+-		}
+-	}
+-
+-	public void SigninAsync(string newEmail, string newPassword)
+-	{
+-		this.DebugLog(string.Format("Attempting to sign in as {0}...", this.email));
+-		this.DisableUI();
+-		this.auth.SignInWithEmailAndPasswordAsync(newEmail, newPassword).ContinueWith(new Action<Task<FirebaseUser>>(this.HandleSigninResult));
+-	}
+-
+-	public void CreateNewUserAsync(string newEmail, string newPassword)
+-	{
+-		this.DebugLog(string.Format("Attempting to create user {0}...", newEmail));
+-		this.DisableUI();
+-		string newDisplayName = this.displayName;
+-		this.auth.CreateUserWithEmailAndPasswordAsync(newEmail, newPassword).ContinueWith<Task>(delegate(Task<FirebaseUser> task)
+-		{
+-			this.EnableUI();
+-			if (this.LogTaskCompletion(task, "User Creation"))
+-			{
+-				this.userCreated = true;
+-				this.userCreateAttempts = 0;
+-				this.connectionTimer = 0f;
+-				this.checkTime = this.connectedBufferTime;
+-				this.connectionStatus = true;
+-				FirebaseUser result = task.Result;
+-				this.DisplayDetailedUserInfo(result, 1);
+-				return this.UpdateUserProfileAsync(newDisplayName);
+-			}
+-			this.userCreated = false;
+-			return task;
+-		}).Unwrap();
+-	}
+-
+-	protected bool LogTaskCompletion(Task task, string operation)
+-	{
+-		bool flag = false;
+-		if (task.IsCanceled)
+-		{
+-			this.DebugLog(operation + " canceled.");
+-		}
+-		else
+-		{
+-			if (task.IsFaulted)
+-			{
+-				this.DebugLog(operation + " encounted an error.");
+-				using (IEnumerator<Exception> enumerator = task.Exception.Flatten().InnerExceptions.GetEnumerator())
+-				{
+-					while (enumerator.MoveNext())
+-					{
+-						Exception ex = enumerator.Current;
+-						string text = "";
+-						FirebaseException ex2 = ex as FirebaseException;
+-						if (ex2 != null)
+-						{
+-							text = string.Format("AuthError.{0}: ", ((AuthError)ex2.ErrorCode).ToString());
+-							if (ex2.ErrorCode == 8)
+-							{
+-								flag = true;
+-							}
+-						}
+-						this.DebugLog(text + ex.ToString());
+-					}
+-					return flag;
+-				}
+-			}
+-			if (task.IsCompleted)
+-			{
+-				this.DebugLog(operation + " completed");
+-				flag = true;
+-			}
+-		}
+-		return flag;
+-	}
+-
+-	public void SigninAsync()
+-	{
+-		this.email = this.emailText.text;
+-		this.password = this.passwordText.text;
+-		this.DebugLog(string.Format("Attempting to sign in as {0}...", this.email));
+-		this.DisableUI();
+-		this.auth.SignInWithEmailAndPasswordAsync(this.email, this.password).ContinueWith(new Action<Task<FirebaseUser>>(this.HandleSigninResult));
+-	}
+-
+-	public Task SigninWithEmailAsync()
+-	{
+-		this.DebugLog(string.Format("Attempting to sign in as {0}...", this.email));
+-		this.DisableUI();
+-		if (this.signInAndFetchProfile)
+-		{
+-			return this.auth.SignInAndRetrieveDataWithCredentialAsync(EmailAuthProvider.GetCredential(this.email, this.password)).ContinueWith(new Action<Task<SignInResult>>(this.HandleSignInWithSignInResult));
+-		}
+-		return this.auth.SignInWithEmailAndPasswordAsync(this.email, this.password).ContinueWith(new Action<Task<FirebaseUser>>(this.HandleSignInWithUser));
+-	}
+-
+-	private void HandleSigninResult(Task<FirebaseUser> obj)
+-	{
+-		this.EnableUI();
+-		if (this.LogTaskCompletion(obj, "Sign-in"))
+-		{
+-			this.connectionStatus = true;
+-			this.isSignedIn = true;
+-			return;
+-		}
+-		this.isSignedIn = false;
+-	}
+-
+-	public void CreateUserWithEmailAsync()
+-	{
+-		this.email = this.emailText.text;
+-		this.password = this.passwordText.text;
+-		this.DebugLog(string.Format("Attempting to create user {0}...", this.email));
+-		this.DisableUI();
+-		string newDisplayName = this.displayName;
+-		this.auth.CreateUserWithEmailAndPasswordAsync(this.email, this.password).ContinueWith<Task>(delegate(Task<FirebaseUser> task)
+-		{
+-			this.EnableUI();
+-			if (this.LogTaskCompletion(task, "User Creation"))
+-			{
+-				FirebaseUser result = task.Result;
+-				this.DisplayDetailedUserInfo(result, 1);
+-				return this.UpdateUserProfileAsync(newDisplayName);
+-			}
+-			return task;
+-		}).Unwrap();
+-	}
+-
+-	public Task UpdateUserProfileAsync(string newDisplayName = null)
+-	{
+-		if (this.auth.CurrentUser == null)
+-		{
+-			this.DebugLog("Not signed in, unable to update user profile");
+-			return Task.FromResult<int>(0);
+-		}
+-		this.displayName = newDisplayName ?? this.displayName;
+-		this.DebugLog("Updating user profile");
+-		this.DisableUI();
+-		return this.auth.CurrentUser.UpdateUserProfileAsync(new UserProfile
+-		{
+-			DisplayName = this.displayName,
+-			PhotoUrl = this.auth.CurrentUser.PhotoUrl
+-		}).ContinueWith(delegate(Task task)
+-		{
+-			this.EnableUI();
+-			if (this.LogTaskCompletion(task, "User profile"))
+-			{
+-				this.DisplayDetailedUserInfo(this.auth.CurrentUser, 1);
+-			}
+-		});
+-	}
+-
+-	public Task SigninWithEmailCredentialAsync()
+-	{
+-		this.DebugLog(string.Format("Attempting to sign in as {0}...", this.email));
+-		this.DisableUI();
+-		if (this.signInAndFetchProfile)
+-		{
+-			return this.auth.SignInAndRetrieveDataWithCredentialAsync(EmailAuthProvider.GetCredential(this.email, this.password)).ContinueWith(new Action<Task<SignInResult>>(this.HandleSignInWithSignInResult));
+-		}
+-		return this.auth.SignInWithCredentialAsync(EmailAuthProvider.GetCredential(this.email, this.password)).ContinueWith(new Action<Task<FirebaseUser>>(this.HandleSignInWithUser));
+-	}
+-
+-	public void SigninAnonymouslyAsync()
+-	{
+-		this.DebugLog("Attempting to sign anonymously...");
+-		this.DisableUI();
+-		this.auth.SignInAnonymouslyAsync().ContinueWith(new Action<Task<FirebaseUser>>(this.HandleSignInWithUser));
+-	}
+-
+-	private void HandleSignInWithUser(Task<FirebaseUser> task)
+-	{
+-		this.EnableUI();
+-		if (this.LogTaskCompletion(task, "Sign-in"))
+-		{
+-			this.DebugLog(string.Format("{0} signed in", task.Result.DisplayName));
+-			return;
+-		}
+-		MonoBehaviour.print("dont u dare");
+-	}
+-
+-	private void HandleSignInWithSignInResult(Task<SignInResult> task)
+-	{
+-		this.EnableUI();
+-		if (this.LogTaskCompletion(task, "Sign-in"))
+-		{
+-			this.DisplaySignInResult(task.Result, 1);
+-		}
+-	}
+-
+-	protected Task ReauthenticateAsync()
+-	{
+-		FirebaseUser currentUser = this.auth.CurrentUser;
+-		if (currentUser == null)
+-		{
+-			this.DebugLog("Not signed in, unable to reauthenticate user.");
+-			TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+-			taskCompletionSource.SetException(new Exception("Not signed in"));
+-			return taskCompletionSource.Task;
+-		}
+-		this.DebugLog("Reauthenticating...");
+-		this.DisableUI();
+-		Credential credential = EmailAuthProvider.GetCredential(this.email, this.password);
+-		if (this.signInAndFetchProfile)
+-		{
+-			return currentUser.ReauthenticateAndRetrieveDataAsync(credential).ContinueWith(delegate(Task<SignInResult> task)
+-			{
+-				this.EnableUI();
+-				if (this.LogTaskCompletion(task, "Reauthentication"))
+-				{
+-					this.DisplaySignInResult(task.Result, 1);
+-				}
+-			});
+-		}
+-		return currentUser.ReauthenticateAsync(credential).ContinueWith(delegate(Task task)
+-		{
+-			this.EnableUI();
+-			if (this.LogTaskCompletion(task, "Reauthentication"))
+-			{
+-				this.DisplayDetailedUserInfo(this.auth.CurrentUser, 1);
+-			}
+-		});
+-	}
+-
+-	public void ReloadUser()
+-	{
+-		if (this.auth.CurrentUser == null)
+-		{
+-			this.DebugLog("Not signed in, unable to reload user.");
+-			return;
+-		}
+-		this.DebugLog("Reload User Data");
+-		this.auth.CurrentUser.ReloadAsync().ContinueWith(delegate(Task task)
+-		{
+-			if (this.LogTaskCompletion(task, "Reload"))
+-			{
+-				this.DisplayDetailedUserInfo(this.auth.CurrentUser, 1);
+-			}
+-		});
+-	}
+-
+-	public void GetUserToken()
+-	{
+-		if (this.auth.CurrentUser == null)
+-		{
+-			this.DebugLog("Not signed in, unable to get token.");
+-			return;
+-		}
+-		this.DebugLog("Fetching user token");
+-		this.fetchingToken = true;
+-		this.auth.CurrentUser.TokenAsync(false).ContinueWith(delegate(Task<string> task)
+-		{
+-			this.fetchingToken = false;
+-			if (this.LogTaskCompletion(task, "User token fetch"))
+-			{
+-				this.DebugLog("Token = " + task.Result);
+-			}
+-		});
+-	}
+-
+-	private void GetUserInfo()
+-	{
+-		if (this.auth.CurrentUser == null)
+-		{
+-			this.DebugLog("Not signed in, unable to get info.");
+-			return;
+-		}
+-		this.DebugLog("Current user info:");
+-		this.DisplayDetailedUserInfo(this.auth.CurrentUser, 1);
+-	}
+-
+-	protected Task UnlinkEmailAsync()
+-	{
+-		if (this.auth.CurrentUser == null)
+-		{
+-			this.DebugLog("Not signed in, unable to unlink");
+-			TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+-			taskCompletionSource.SetException(new Exception("Not signed in"));
+-			return taskCompletionSource.Task;
+-		}
+-		this.DebugLog("Unlinking email credential");
+-		this.DisableUI();
+-		return this.auth.CurrentUser.UnlinkAsync(EmailAuthProvider.GetCredential(this.email, this.password).Provider).ContinueWith(delegate(Task<FirebaseUser> task)
+-		{
+-			this.EnableUI();
+-			this.LogTaskCompletion(task, "Unlinking");
+-		});
+-	}
+-
+-	protected void SignOut()
+-	{
+-		this.DebugLog("Signing out.");
+-		this.auth.SignOut();
+-	}
+-
+-	protected Task DeleteUserAsync()
+-	{
+-		if (this.auth.CurrentUser != null)
+-		{
+-			this.DebugLog(string.Format("Attempting to delete user {0}...", this.auth.CurrentUser.UserId));
+-			this.DisableUI();
+-			return this.auth.CurrentUser.DeleteAsync().ContinueWith(delegate(Task task)
+-			{
+-				this.EnableUI();
+-				this.LogTaskCompletion(task, "Delete user");
+-			});
+-		}
+-		this.DebugLog("Sign-in before deleting user.");
+-		return Task.FromResult<int>(0);
+-	}
+-
+-	protected void DisplayProvidersForEmail()
+-	{
+-		this.auth.FetchProvidersForEmailAsync(this.email).ContinueWith(delegate(Task<IEnumerable<string>> authTask)
+-		{
+-			if (this.LogTaskCompletion(authTask, "Fetch Providers"))
+-			{
+-				this.DebugLog(string.Format("Email Providers for '{0}':", this.email));
+-				foreach (string text in authTask.Result)
+-				{
+-					this.DebugLog(text);
+-				}
+-			}
+-		});
+-	}
+-
+-	private void OnDestroy()
+-	{
+-		if (this.auth != null)
+-		{
+-			this.auth.StateChanged -= this.AuthStateChanged;
+-			this.auth.IdTokenChanged -= this.IdTokenChanged;
+-			this.auth = null;
+-		}
+-	}
+-
+-	private void DisableUI()
+-	{
+-		this.UIEnabled = false;
+-	}
+-
+-	private void EnableUI()
+-	{
+-		this.UIEnabled = true;
+-	}
+-
+-	public void DebugLog(string s)
+-	{
+-	}
+-
+-	protected void DisplayProfile<T>(IDictionary<T, object> profile, int indentLevel)
+-	{
+-		string text = new string(' ', indentLevel * 2);
+-		foreach (KeyValuePair<T, object> keyValuePair in profile)
+-		{
+-			IDictionary<object, object> dictionary = keyValuePair.Value as IDictionary<object, object>;
+-			if (dictionary != null)
+-			{
+-				this.DebugLog(string.Format("{0}{1}:", text, keyValuePair.Key));
+-				this.DisplayProfile<object>(dictionary, indentLevel + 1);
+-			}
+-			else
+-			{
+-				this.DebugLog(string.Format("{0}{1}: {2}", text, keyValuePair.Key, keyValuePair.Value));
+-			}
+-		}
+-	}
+-
+-	protected void DisplaySignInResult(SignInResult result, int indentLevel)
+-	{
+-		string text = new string(' ', indentLevel * 2);
+-		this.DisplayDetailedUserInfo(result.User, indentLevel);
+-		UserMetadata meta = result.Meta;
+-		if (meta != null)
+-		{
+-			this.DebugLog(string.Format("{0}Created: {1}", text, meta.CreationTimestamp));
+-			this.DebugLog(string.Format("{0}Last Sign-in: {1}", text, meta.LastSignInTimestamp));
+-		}
+-		AdditionalUserInfo info = result.Info;
+-		if (info != null)
+-		{
+-			this.DebugLog(string.Format("{0}Additional User Info:", text));
+-			this.DebugLog(string.Format("{0}  User Name: {1}", text, info.UserName));
+-			this.DebugLog(string.Format("{0}  Provider ID: {1}", text, info.ProviderId));
+-			this.DisplayProfile<string>(info.Profile, indentLevel + 1);
+-		}
+-	}
+-
+-	protected void DisplayUserInfo(IUserInfo userInfo, int indentLevel)
+-	{
+-		string text = new string(' ', indentLevel * 2);
+-		foreach (KeyValuePair<string, string> keyValuePair in new Dictionary<string, string>
+-		{
+-			{ "Display Name", userInfo.DisplayName },
+-			{ "Email", userInfo.Email },
+-			{
+-				"Photo URL",
+-				(userInfo.PhotoUrl != null) ? userInfo.PhotoUrl.ToString() : null
+-			},
+-			{ "Provider ID", userInfo.ProviderId },
+-			{ "User ID", userInfo.UserId }
+-		})
+-		{
+-			if (!string.IsNullOrEmpty(keyValuePair.Value))
+-			{
+-				this.DebugLog(string.Format("{0}{1}: {2}", text, keyValuePair.Key, keyValuePair.Value));
+-			}
+-		}
+-	}
+-
+-	protected void DisplayDetailedUserInfo(FirebaseUser user, int indentLevel)
+-	{
+-		string text = new string(' ', indentLevel * 2);
+-		this.DisplayUserInfo(user, indentLevel);
+-		this.DebugLog(string.Format("{0}Anonymous: {1}", text, user.IsAnonymous));
+-		this.DebugLog(string.Format("{0}Email Verified: {1}", text, user.IsEmailVerified));
+-		this.DebugLog(string.Format("{0}Phone Number: {1}", text, user.PhoneNumber));
+-		List<IUserInfo> list = new List<IUserInfo>(user.ProviderData);
+-		int count = list.Count;
+-		if (count > 0)
+-		{
+-			for (int i = 0; i < count; i++)
+-			{
+-				this.DebugLog(string.Format("{0}Provider Data: {1}", text, i));
+-				this.DisplayUserInfo(list[i], indentLevel + 2);
+-			}
+-		}
+-	}
+-
+-	private void AuthStateChanged(object sender, EventArgs eventArgs)
+-	{
+-		FirebaseAuth firebaseAuth = sender as FirebaseAuth;
+-		FirebaseUser firebaseUser = null;
+-		if (firebaseAuth != null)
+-		{
+-			this.userByAuth.TryGetValue(firebaseAuth.App.Name, out firebaseUser);
+-		}
+-		if (firebaseAuth == this.auth && firebaseAuth.CurrentUser != firebaseUser)
+-		{
+-			bool flag = firebaseUser != firebaseAuth.CurrentUser && firebaseAuth.CurrentUser != null;
+-			if (!flag && firebaseUser != null)
+-			{
+-				this.DebugLog("Signed out " + firebaseUser.UserId);
+-			}
+-			firebaseUser = firebaseAuth.CurrentUser;
+-			this.userByAuth[firebaseAuth.App.Name] = firebaseUser;
+-			if (flag)
+-			{
+-				this.DebugLog("Signed in " + firebaseUser.UserId);
+-				this.displayName = firebaseUser.DisplayName ?? "";
+-				this.DisplayDetailedUserInfo(firebaseUser, 1);
+-			}
+-		}
+-	}
+-
+-	private void IdTokenChanged(object sender, EventArgs eventArgs)
+-	{
+-		FirebaseAuth firebaseAuth = sender as FirebaseAuth;
+-		if (firebaseAuth == this.auth && firebaseAuth.CurrentUser != null && !this.fetchingToken)
+-		{
+-			firebaseAuth.CurrentUser.TokenAsync(false).ContinueWith(delegate(Task<string> task)
+-			{
+-				this.DebugLog(string.Format("Token[0:8] = {0}", task.Result.Substring(0, 8)));
+-			});
+-		}
+-	}
+-
+-	protected void SendPasswordResetEmail()
+-	{
+-		this.auth.SendPasswordResetEmailAsync(this.email).ContinueWith(delegate(Task authTask)
+-		{
+-			if (this.LogTaskCompletion(authTask, "Send Password Reset Email"))
+-			{
+-				this.DebugLog("Password reset email sent to " + this.email);
+-			}
+-		});
+-	}
+-
+ 	public GameSession()
+ 	{
+ 		this.selectedCountry = "";
+ 		this.startNew = true;
+-		this.userByAuth = new Dictionary<string, FirebaseUser>();
+-		this.UIEnabled = true;
+-		this.dependencyStatus = DependencyStatus.UnavailableOther;
+ 		this.connectionStatus = true;
+ 		this.maxUserCreateAttempts = 3;
+ 		this.maxSignInAttempts = 3;
+@@ -647,22 +83,9 @@
+ 		this.displayName = "";
+ 		this.phoneNumber = "";
+ 		this.receivedCode = "";
+-		this.tempAndroidBannerId = "ca-app-pub-3940256099942544/6300978111";
+-		this.actualAndroidBannerId = "ca-app-pub-3467657409158408/8618264696";
+-		this.tempAndroidAppId = "ca-app-pub-3940256099942544~3347511713";
+-		this.actualAndroidAppId = "ca-app-pub-3467657409158408~2464751129";
+-		this.tempIOSBannerId = "ca-app-pub-3940256099942544/2934735716";
+-		this.actualIOSBannerId = "ca-app-pub-3467657409158408/2473541675";
+-		this.tempIOSAppId = "ca-app-pub-3940256099942544~1458002511";
+-		this.actualIOSAppId = "ca-app-pub-3467657409158408~7917440045";
+ 		base..ctor();
+ 	}
+ 
+-	// Note: this type is marked as 'beforefieldinit'.
+-	static GameSession()
+-	{
+-	}
+-
+ 	[SerializeField]
+ 	public GameMode gameMode;
+ 
+@@ -678,24 +101,6 @@
+ 
+ 	public int colorIndex;
+ 
+-	protected FirebaseAuth auth;
+-
+-	protected Dictionary<string, FirebaseUser> userByAuth;
+-
+-	protected bool signInAndFetchProfile;
+-
+-	private bool fetchingToken;
+-
+-	private bool UIEnabled;
+-
+-	public Text emailText;
+-
+-	public Text passwordText;
+-
+-	private const int kMaxLogSize = 16382;
+-
+-	private DependencyStatus dependencyStatus;
+-
+ 	public bool checkInternet;
+ 
+ 	public bool connectionStatus;
+@@ -739,22 +144,4 @@
+ 	public float admobsTimer;
+ 
+ 	public float bannerHeight;
+-
+-	private string tempAndroidBannerId;
+-
+-	private string actualAndroidBannerId;
+-
+-	private string tempAndroidAppId;
+-
+-	private string actualAndroidAppId;
+-
+-	private string tempIOSBannerId;
+-
+-	private string actualIOSBannerId;
+-
+-	private string tempIOSAppId;
+-
+-	private string actualIOSAppId;
+-
+-	public bool adsAllowed;
+ }

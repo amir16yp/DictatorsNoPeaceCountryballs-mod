@@ -1,0 +1,26 @@
+--- decompiled_assembly/solution.sln	2024-08-25 01:50:00.765209500 +0300
++++ work/solution.sln	2024-08-25 01:50:01.280210000 +0300
+@@ -1,7 +1,7 @@
+ 
+ Microsoft Visual Studio Solution File, Format Version 11.00
+ # Visual Studio 2010
+-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp\Assembly-CSharp.csproj", "{13C50C6F-07B5-4D70-9413-3DCE295EB880}"
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp\Assembly-CSharp.csproj", "{1C06911B-CABC-4148-9156-313FC0DF2A29}"
+ EndProject
+ Global
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+@@ -9,10 +9,10 @@
+ 		Release|Any CPU = Release|Any CPU
+ 	EndGlobalSection
+ 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+-		{13C50C6F-07B5-4D70-9413-3DCE295EB880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+-		{13C50C6F-07B5-4D70-9413-3DCE295EB880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+-		{13C50C6F-07B5-4D70-9413-3DCE295EB880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+-		{13C50C6F-07B5-4D70-9413-3DCE295EB880}.Release|Any CPU.Build.0 = Release|Any CPU
++		{1C06911B-CABC-4148-9156-313FC0DF2A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{1C06911B-CABC-4148-9156-313FC0DF2A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{1C06911B-CABC-4148-9156-313FC0DF2A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{1C06911B-CABC-4148-9156-313FC0DF2A29}.Release|Any CPU.Build.0 = Release|Any CPU
+ 	EndGlobalSection
+ 	GlobalSection(SolutionProperties) = preSolution
+ 		HideSolutionNode = FALSE

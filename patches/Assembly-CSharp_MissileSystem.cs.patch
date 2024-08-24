@@ -1,0 +1,75 @@
+--- decompiled_assembly/Assembly-CSharp/MissileSystem.cs	2024-08-25 01:50:00.516209900 +0300
++++ work/Assembly-CSharp/MissileSystem.cs	2024-08-25 01:50:01.047210100 +0300
+@@ -110,40 +110,41 @@
+ 
+ 	private void Update()
+ 	{
+-		if (this.move)
++		if (!this.move)
+ 		{
+-			if (Time.deltaTime > 0.04f)
+-			{
+-				this.finalDeltaTime = this.maxDeltaTime;
+-			}
+-			else
+-			{
+-				this.finalDeltaTime = Time.deltaTime;
+-			}
+-			Vector3 vector = this.direction.normalized;
+-			vector *= this.missileSpeed * this.finalDeltaTime;
+-			this.missile.Translate(vector, Space.World);
+-			this.dist = Vector2.Distance(this.missile.position, this.target.position);
+-			if (this.dist < this.detachedDistance && !this.detached)
+-			{
+-				this.anim.SetBool(this.detachedID, true);
+-				this.detached = true;
+-			}
+-			if (this.dist < this.reachedDistance)
++			return;
++		}
++		if (Time.deltaTime > 0.04f)
++		{
++			this.finalDeltaTime = this.maxDeltaTime;
++		}
++		else
++		{
++			this.finalDeltaTime = Time.deltaTime;
++		}
++		Vector3 vector = this.direction.normalized;
++		vector *= this.missileSpeed * this.finalDeltaTime;
++		this.missile.Translate(vector, Space.World);
++		this.dist = Vector2.Distance(this.missile.position, this.target.position);
++		if (this.dist < this.detachedDistance && !this.detached)
++		{
++			this.anim.SetBool(this.detachedID, true);
++			this.detached = true;
++		}
++		if (this.dist < this.reachedDistance)
++		{
++			this.move = false;
++			this.moveCamWithMissile = false;
++			this.anim.SetBool(this.missileDropID, true);
++		}
++		if (this.moveCamWithMissile)
++		{
++			this.camPos.x = this.missile.position.x;
++			this.camPos.y = this.missile.position.y;
++			Camera.main.transform.position = this.camPos;
++			if (Input.touchCount != 0 || Input.GetKeyDown(KeyCode.Mouse0))
+ 			{
+-				this.move = false;
+ 				this.moveCamWithMissile = false;
+-				this.anim.SetBool(this.missileDropID, true);
+-			}
+-			if (this.moveCamWithMissile)
+-			{
+-				this.camPos.x = this.missile.position.x;
+-				this.camPos.y = this.missile.position.y;
+-				Camera.main.transform.position = this.camPos;
+-				if (Input.touchCount != 0 || Input.GetKeyDown(KeyCode.Mouse0))
+-				{
+-					this.moveCamWithMissile = false;
+-				}
+ 			}
+ 		}
+ 	}

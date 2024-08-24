@@ -1,0 +1,106 @@
+--- decompiled_assembly/Assembly-CSharp/LanguageSelectPanel.cs	2024-08-25 01:50:00.446209800 +0300
++++ work/Assembly-CSharp/LanguageSelectPanel.cs	2024-08-25 01:50:00.980210700 +0300
+@@ -12,57 +12,58 @@
+ 
+ 	public void Start()
+ 	{
+-		if (SceneManager.GetActiveScene().buildIndex == 0)
++		if (SceneManager.GetActiveScene().buildIndex != 0)
+ 		{
+-			LanguageData languageData = SaveSystem.LoadLanguageData();
+-			if (languageData != null && !LocalizationManager.instance.changeLanguage)
++			return;
++		}
++		LanguageData languageData = SaveSystem.LoadLanguageData();
++		if (languageData != null && !LocalizationManager.instance.changeLanguage)
++		{
++			switch (languageData.savedLanguage)
+ 			{
+-				switch (languageData.savedLanguage)
+-				{
+-				case LanguageType.ENGLISH:
+-					this.english.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.MARATHI:
+-					this.marathi.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.RUSSIAN:
+-					this.russian.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.CHINESE:
+-					this.chinese.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.JAPANESE:
+-					this.japanese.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.KOREAN:
+-					this.korean.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.PORTUGUESE:
+-					this.portuguese.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.SPANISH:
+-					this.spanish.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.GERMAN:
+-					this.german.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.FRENCH:
+-					this.french.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.ITALIAN:
+-					this.italian.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				case LanguageType.TURKISH:
+-					this.turkish.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-					goto IL_016A;
+-				}
++			case LanguageType.ENGLISH:
+ 				this.english.GetComponent<LanguagePrefab>().LanguageClickedNew();
+-				IL_016A:
+-				LocalizationManager.instance.LoadLocalizedText();
+-				return;
++				goto IL_0168;
++			case LanguageType.MARATHI:
++				this.marathi.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.RUSSIAN:
++				this.russian.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.CHINESE:
++				this.chinese.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.JAPANESE:
++				this.japanese.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.KOREAN:
++				this.korean.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.PORTUGUESE:
++				this.portuguese.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.SPANISH:
++				this.spanish.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.GERMAN:
++				this.german.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.FRENCH:
++				this.french.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.ITALIAN:
++				this.italian.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
++			case LanguageType.TURKISH:
++				this.turkish.GetComponent<LanguagePrefab>().LanguageClickedNew();
++				goto IL_0168;
+ 			}
+ 			this.english.GetComponent<LanguagePrefab>().LanguageClickedNew();
++			IL_0168:
++			LocalizationManager.instance.LoadLocalizedText();
++			return;
+ 		}
++		this.english.GetComponent<LanguagePrefab>().LanguageClickedNew();
+ 	}
+ 
+ 	public void OpenSure()

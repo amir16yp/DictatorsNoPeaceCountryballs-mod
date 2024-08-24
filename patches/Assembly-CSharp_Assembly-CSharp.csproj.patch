@@ -1,0 +1,1218 @@
+--- decompiled_assembly/Assembly-CSharp/Assembly-CSharp.csproj	2024-08-25 01:50:00.261209800 +0300
++++ work/Assembly-CSharp/Assembly-CSharp.csproj	2024-08-25 01:50:00.807209800 +0300
+@@ -1,18 +1,18 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <PropertyGroup>
+     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+-    <ProjectGuid>{13C50C6F-07B5-4D70-9413-3DCE295EB880}</ProjectGuid>
++    <ProjectGuid>{7EF657BC-41AE-429E-8463-E252EC2CE04F}</ProjectGuid>
+     <OutputType>Library</OutputType>
+     <AppDesignerFolder>Properties</AppDesignerFolder>
+     <RootNamespace>Assembly-CSharp</RootNamespace>
+     <AssemblyName>Assembly-CSharp</AssemblyName>
+-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
++    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+     <FileAlignment>512</FileAlignment>
++    <LangVersion>7.3</LangVersion>
+   </PropertyGroup>
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+-    <PlatformTarget>AnyCPU</PlatformTarget>
+     <DebugSymbols>true</DebugSymbols>
+     <DebugType>full</DebugType>
+     <Optimize>false</Optimize>
+@@ -20,206 +20,1039 @@
+     <DefineConstants>DEBUG;TRACE</DefineConstants>
+     <ErrorReport>prompt</ErrorReport>
+     <WarningLevel>4</WarningLevel>
++    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+   </PropertyGroup>
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+-    <PlatformTarget>AnyCPU</PlatformTarget>
+     <DebugType>pdbonly</DebugType>
+     <Optimize>true</Optimize>
+     <OutputPath>bin\Release\</OutputPath>
+     <DefineConstants>TRACE</DefineConstants>
+     <ErrorReport>prompt</ErrorReport>
+     <WarningLevel>4</WarningLevel>
++    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+   </PropertyGroup>
+   <ItemGroup>
++    <Reference Include="Apple">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Apple.dll</HintPath>
++    </Reference>
+     <Reference Include="Assembly-CSharp-firstpass">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Assembly-CSharp-firstpass.dll</HintPath>
++    </Reference>
++    <Reference Include="Assembly-CSharp-mod">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Assembly-CSharp-mod.dll</HintPath>
+     </Reference>
+     <Reference Include="AstarPathfindingProject">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\AstarPathfindingProject.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\AstarPathfindingProject.dll</HintPath>
++    </Reference>
++    <Reference Include="ChannelPurchase">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\ChannelPurchase.dll</HintPath>
++    </Reference>
++    <Reference Include="FacebookStore">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\FacebookStore.dll</HintPath>
+     </Reference>
+     <Reference Include="Firebase.Analytics">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Firebase.Analytics.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Analytics.dll</HintPath>
+     </Reference>
+     <Reference Include="Firebase.App">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Firebase.App.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.App.dll</HintPath>
+     </Reference>
+     <Reference Include="Firebase.Auth">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Firebase.Auth.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Auth.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Platform">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Platform.dll</HintPath>
++    </Reference>
++    <Reference Include="Google.MiniJson">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Google.MiniJson.dll</HintPath>
++    </Reference>
++    <Reference Include="Mono.Security">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Mono.Security.dll</HintPath>
++    </Reference>
++    <Reference Include="mscorlib">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\mscorlib.dll</HintPath>
+     </Reference>
+     <Reference Include="netstandard">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\netstandard.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\netstandard.dll</HintPath>
++    </Reference>
++    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
++    </Reference>
++    <Reference Include="Purchasing.Common">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Purchasing.Common.dll</HintPath>
++    </Reference>
++    <Reference Include="Security">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Security.dll</HintPath>
+     </Reference>
+     <Reference Include="Stores">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Stores.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Stores.dll</HintPath>
++    </Reference>
++    <Reference Include="System.ComponentModel.Composition">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.ComponentModel.Composition.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Configuration">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Configuration.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Core">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Core.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Data">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Data.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Diagnostics.StackTrace">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Diagnostics.StackTrace.dll</HintPath>
++    </Reference>
++    <Reference Include="System">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Drawing">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Drawing.dll</HintPath>
++    </Reference>
++    <Reference Include="System.EnterpriseServices">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.EnterpriseServices.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Globalization.Extensions">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Globalization.Extensions.dll</HintPath>
++    </Reference>
++    <Reference Include="System.IO.Compression">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.IO.Compression.dll</HintPath>
++    </Reference>
++    <Reference Include="System.IO.Compression.FileSystem">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.IO.Compression.FileSystem.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Net.Http">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Net.Http.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Numerics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Numerics.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Runtime.Serialization.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization.Xml">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Runtime.Serialization.Xml.dll</HintPath>
++    </Reference>
++    <Reference Include="System.ServiceModel.Internals">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.ServiceModel.Internals.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Transactions">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Transactions.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml.Linq">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.Linq.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml.XPath.XDocument">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.XPath.XDocument.dll</HintPath>
++    </Reference>
++    <Reference Include="Tizen">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Tizen.dll</HintPath>
++    </Reference>
++    <Reference Include="UDP">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UDP.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Analytics.DataPrivacy">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Analytics.DataPrivacy.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Analytics.StandardEvents">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Analytics.StandardEvents.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Compat">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Compat.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Tasks">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Tasks.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.TextMeshPro">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Unity.TextMeshPro.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.TextMeshPro.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VectorGraphics">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\Unity.VectorGraphics.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.VectorGraphics.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AccessibilityModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AccessibilityModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AIModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.AnimationModule">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AnimationModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ARModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ARModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AssetBundleModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AssetBundleModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.AudioModule">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AudioModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.BaselibModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.BaselibModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClothModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClothModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClusterInputModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClusterInputModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClusterRendererModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClusterRendererModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.CoreModule">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.CoreModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.CrashReportingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.CrashReportingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.DirectorModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.DirectorModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.FileSystemHttpModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.FileSystemHttpModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.GameCenterModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.GameCenterModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.GridModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.GridModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.HotReloadModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.HotReloadModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ImageConversionModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ImageConversionModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.IMGUIModule">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.IMGUIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.InputModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.InputModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.JSONSerializeModule">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.JSONSerializeModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.LocalizationModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.LocalizationModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Networking">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Networking.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ParticleSystemModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ParticleSystemModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.PerformanceReportingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.PerformanceReportingModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.Physics2DModule">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Physics2DModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.PhysicsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.PhysicsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ProfilerModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ProfilerModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.Purchasing">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.Purchasing.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Purchasing.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ScreenCaptureModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ScreenCaptureModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SharedInternalsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SharedInternalsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpatialTracking">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpatialTracking.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpriteMaskModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpriteMaskModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpriteShapeModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpriteShapeModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.StreamingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.StreamingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.StyleSheetsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.StyleSheetsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SubstanceModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SubstanceModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TerrainModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TerrainModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TerrainPhysicsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TerrainPhysicsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TextCoreModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TextCoreModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TextRenderingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TextRenderingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TilemapModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TilemapModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Timeline">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Timeline.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TimelineModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TimelineModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TLSModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TLSModule.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+-      <HintPath>..\..\..\..\scoop\apps\steam\current\steamapps\common\DictatorsNoPeaceCountryballs\DictatorsNoPeaceCountryballs_Data\Managed\UnityEngine.UI.dll</HintPath>
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UI.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UIElementsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UIElementsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UmbraModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UmbraModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UNETModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UNETModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityAnalyticsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityAnalyticsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityConnectModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityConnectModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityTestProtocolModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityTestProtocolModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VehiclesModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VehiclesModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VFXModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VFXModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VideoModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VideoModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VRModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VRModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.WindModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.WindModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.XRModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.XRModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityStore">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityStore.dll</HintPath>
++    </Reference>
++    <Reference Include="winrt">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\winrt.dll</HintPath>
+     </Reference>
+   </ItemGroup>
+   <ItemGroup>
+-    <AppDesigner Include="Properties\" />
++    <Reference Include="Apple">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Apple.dll</HintPath>
++    </Reference>
++    <Reference Include="Assembly-CSharp-firstpass">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Assembly-CSharp-firstpass.dll</HintPath>
++    </Reference>
++    <Reference Include="Assembly-CSharp-mod">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Assembly-CSharp-mod.dll</HintPath>
++    </Reference>
++    <Reference Include="AstarPathfindingProject">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\AstarPathfindingProject.dll</HintPath>
++    </Reference>
++    <Reference Include="ChannelPurchase">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\ChannelPurchase.dll</HintPath>
++    </Reference>
++    <Reference Include="FacebookStore">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\FacebookStore.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Analytics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Analytics.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.App">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.App.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Auth">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Auth.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Platform">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Platform.dll</HintPath>
++    </Reference>
++    <Reference Include="Google.MiniJson">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Google.MiniJson.dll</HintPath>
++    </Reference>
++    <Reference Include="Mono.Security">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Mono.Security.dll</HintPath>
++    </Reference>
++    <Reference Include="mscorlib">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\mscorlib.dll</HintPath>
++    </Reference>
++    <Reference Include="netstandard">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\netstandard.dll</HintPath>
++    </Reference>
++    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
++    </Reference>
++    <Reference Include="Purchasing.Common">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Purchasing.Common.dll</HintPath>
++    </Reference>
++    <Reference Include="Security">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Security.dll</HintPath>
++    </Reference>
++    <Reference Include="Stores">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Stores.dll</HintPath>
++    </Reference>
++    <Reference Include="System.ComponentModel.Composition">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.ComponentModel.Composition.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Configuration">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Configuration.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Core">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Core.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Data">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Data.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Diagnostics.StackTrace">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Diagnostics.StackTrace.dll</HintPath>
++    </Reference>
++    <Reference Include="System">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Drawing">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Drawing.dll</HintPath>
++    </Reference>
++    <Reference Include="System.EnterpriseServices">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.EnterpriseServices.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Globalization.Extensions">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Globalization.Extensions.dll</HintPath>
++    </Reference>
++    <Reference Include="System.IO.Compression">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.IO.Compression.dll</HintPath>
++    </Reference>
++    <Reference Include="System.IO.Compression.FileSystem">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.IO.Compression.FileSystem.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Net.Http">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Net.Http.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Numerics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Numerics.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Runtime.Serialization.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization.Xml">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Runtime.Serialization.Xml.dll</HintPath>
++    </Reference>
++    <Reference Include="System.ServiceModel.Internals">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.ServiceModel.Internals.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Transactions">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Transactions.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml.Linq">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.Linq.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml.XPath.XDocument">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.XPath.XDocument.dll</HintPath>
++    </Reference>
++    <Reference Include="Tizen">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Tizen.dll</HintPath>
++    </Reference>
++    <Reference Include="UDP">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UDP.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Analytics.DataPrivacy">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Analytics.DataPrivacy.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Analytics.StandardEvents">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Analytics.StandardEvents.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Compat">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Compat.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Tasks">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Tasks.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.TextMeshPro">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.TextMeshPro.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.VectorGraphics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.VectorGraphics.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AccessibilityModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AccessibilityModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AnimationModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AnimationModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ARModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ARModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AssetBundleModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AssetBundleModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AudioModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AudioModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.BaselibModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.BaselibModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClothModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClothModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClusterInputModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClusterInputModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClusterRendererModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClusterRendererModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.CoreModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.CoreModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.CrashReportingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.CrashReportingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.DirectorModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.DirectorModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.FileSystemHttpModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.FileSystemHttpModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.GameCenterModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.GameCenterModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.GridModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.GridModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.HotReloadModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.HotReloadModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ImageConversionModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ImageConversionModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.IMGUIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.IMGUIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.InputModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.InputModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.JSONSerializeModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.JSONSerializeModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.LocalizationModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.LocalizationModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Networking">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Networking.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ParticleSystemModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ParticleSystemModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.PerformanceReportingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.PerformanceReportingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Physics2DModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Physics2DModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.PhysicsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.PhysicsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ProfilerModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ProfilerModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Purchasing">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Purchasing.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ScreenCaptureModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ScreenCaptureModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SharedInternalsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SharedInternalsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpatialTracking">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpatialTracking.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpriteMaskModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpriteMaskModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpriteShapeModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpriteShapeModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.StreamingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.StreamingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.StyleSheetsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.StyleSheetsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SubstanceModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SubstanceModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TerrainModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TerrainModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TerrainPhysicsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TerrainPhysicsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TextCoreModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TextCoreModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TextRenderingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TextRenderingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TilemapModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TilemapModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Timeline">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Timeline.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TimelineModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TimelineModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TLSModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TLSModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UI">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UI.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UIElementsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UIElementsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UmbraModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UmbraModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UNETModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UNETModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityAnalyticsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityAnalyticsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityConnectModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityConnectModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityTestProtocolModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityTestProtocolModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VehiclesModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VehiclesModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VFXModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VFXModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VideoModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VideoModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VRModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VRModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.WindModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.WindModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.XRModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.XRModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityStore">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityStore.dll</HintPath>
++    </Reference>
++    <Reference Include="winrt">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\winrt.dll</HintPath>
++    </Reference>
+   </ItemGroup>
+   <ItemGroup>
+-    <Compile Include="AiMilitary.cs" />
+-    <Compile Include="AirForce.cs" />
+-    <Compile Include="AirForceAI.cs" />
+-    <Compile Include="Army.cs" />
+-    <Compile Include="ArmyAi.cs" />
+-    <Compile Include="AudioFiles.cs" />
+-    <Compile Include="BasePanel.cs" />
+-    <Compile Include="CameraDrag.cs" />
+-    <Compile Include="CameraMovement.cs" />
+-    <Compile Include="CameraShake.cs" />
+-    <Compile Include="Caravan.cs" />
+-    <Compile Include="CaravanData.cs" />
+-    <Compile Include="CaravanPanel.cs" />
+-    <Compile Include="CaravanStatus.cs" />
+-    <Compile Include="CentralAdmin.cs" />
+-    <Compile Include="CentralAdminData.cs" />
+-    <Compile Include="ChangeBasePanel.cs" />
+-    <Compile Include="Clouds.cs" />
+-    <Compile Include="ColorInfo.cs" />
+-    <Compile Include="ColorSelectPanel.cs" />
+-    <Compile Include="Constants.cs" />
+-    <Compile Include="ControlPanel.cs" />
+-    <Compile Include="Country.cs" />
+-    <Compile Include="CountryData.cs" />
+-    <Compile Include="CountrySelectPanel.cs" />
+-    <Compile Include="CountryStatus.cs" />
+-    <Compile Include="Directions.cs" />
+-    <Compile Include="DropdownManager.cs" />
+-    <Compile Include="EmpireSelectionPanel.cs" />
+-    <Compile Include="EnemyMilitaryPanel.cs" />
+-    <Compile Include="ExpeditionPanel.cs" />
+-    <Compile Include="ExpeditionTeam.cs" />
+-    <Compile Include="ExpedStatus.cs" />
+-    <Compile Include="FighterPlane.cs" />
+-    <Compile Include="ForeignAirForce.cs" />
+-    <Compile Include="ForeignArmy.cs" />
+-    <Compile Include="ForeignAttack.cs" />
+-    <Compile Include="ForeignAttackMilitaryPanel.cs" />
+-    <Compile Include="ForeignMilitaryPanel.cs" />
+-    <Compile Include="ForeignNavy.cs" />
+-    <Compile Include="ForeignWarStatus.cs" />
+-    <Compile Include="GameMode.cs" />
+-    <Compile Include="GameSession.cs" />
+-    <Compile Include="HowToPlayPanel.cs" />
+-    <Compile Include="InfoFoundPanel.cs" />
+-    <Compile Include="InformationUnknownPanel.cs" />
+-    <Compile Include="Item.cs" />
+-    <Compile Include="LanguageData.cs" />
+-    <Compile Include="LanguagePrefab.cs" />
+-    <Compile Include="LanguageSelectPanel.cs" />
+-    <Compile Include="LanguageType.cs" />
+-    <Compile Include="LevelChanger.cs" />
+-    <Compile Include="Loader.cs" />
+-    <Compile Include="LocalizationData.cs" />
+-    <Compile Include="LocalizationItem.cs" />
+-    <Compile Include="LocalizationManager.cs" />
+-    <Compile Include="LocalizedText.cs" />
+-    <Compile Include="LocalMilitaryPanel.cs" />
+-    <Compile Include="MainMenuManager.cs" />
+-    <Compile Include="Market.cs" />
+-    <Compile Include="MarketPanel.cs" />
+-    <Compile Include="MessageInfo.cs" />
+-    <Compile Include="MessagePanel.cs" />
+-    <Compile Include="MessageText.cs" />
+-    <Compile Include="MessageType.cs" />
+-    <Compile Include="MilitaryBase.cs" />
+-    <Compile Include="MilitaryData.cs" />
+-    <Compile Include="MilitaryUnit.cs" />
+-    <Compile Include="MissilePanel.cs" />
+-    <Compile Include="MissileSystem.cs" />
+-    <Compile Include="MyMilitaryBase.cs" />
+-    <Compile Include="Navy.cs" />
+-    <Compile Include="NavyAi.cs" />
+-    <Compile Include="NuclearAttack.cs" />
+-    <Compile Include="NuclearAttackStatus.cs" />
+-    <Compile Include="NukeAdmin.cs" />
+-    <Compile Include="NukeCamera.cs" />
+-    <Compile Include="NukeCountry.cs" />
+-    <Compile Include="NukeInfoPanel.cs" />
+-    <Compile Include="NukeMissilePanel.cs" />
+-    <Compile Include="NumInputField.cs" />
+-    <Compile Include="NumPad.cs" />
+-    <Compile Include="Ocean.cs" />
+-    <Compile Include="PausePanel.cs" />
+-    <Compile Include="PinchZoom.cs" />
+-    <Compile Include="Planes.cs" />
+-    <Compile Include="PlaySceneAudio.cs" />
+-    <Compile Include="PooledObject.cs" />
+-    <Compile Include="ProdAct.cs" />
+-    <Compile Include="ProductionPanel.cs" />
+-    <Compile Include="ProgressPanel.cs" />
+-    <Compile Include="Propaganda.cs" />
+-    <Compile Include="Properties\AssemblyInfo.cs" />
+-    <Compile Include="PurchasePanel.cs" />
+-    <Compile Include="Purchaser.cs" />
+-    <Compile Include="Rebel.cs" />
+-    <Compile Include="RebelColonizedPanel.cs" />
+-    <Compile Include="RebelIndependentPanel.cs" />
+-    <Compile Include="RebelWar.cs" />
+-    <Compile Include="RebelWarStatus.cs" />
+-    <Compile Include="RoyalAirForcePanel.cs" />
+-    <Compile Include="RoyalArmyPanel.cs" />
+-    <Compile Include="RoyalMilitaryPanel.cs" />
+-    <Compile Include="RoyalNavyPanel.cs" />
+-    <Compile Include="SaleMessagePanel.cs" />
+-    <Compile Include="SaleStatus.cs" />
+-    <Compile Include="SampleBuyItemPanel.cs" />
+-    <Compile Include="SampleCountryButton.cs" />
+-    <Compile Include="SampleMessagePrefab.cs" />
+-    <Compile Include="SampleMilitaryUnit.cs" />
+-    <Compile Include="SampleNuclearCountry.cs" />
+-    <Compile Include="SampleProduction.cs" />
+-    <Compile Include="SampleProgress.cs" />
+-    <Compile Include="SamplePurchasedItem.cs" />
+-    <Compile Include="SampleRebelPanel.cs" />
+-    <Compile Include="SampleScript.cs" />
+-    <Compile Include="SampleSellItemPanel.cs" />
+-    <Compile Include="SavePanel.cs" />
+-    <Compile Include="SaveProgressData.cs" />
+-    <Compile Include="SaveSystem.cs" />
+-    <Compile Include="SimpleMessagePanel.cs" />
+-    <Compile Include="SimpleObjectPool.cs" />
+-    <Compile Include="SpriteLoader.cs" />
+-    <Compile Include="SteamManager.cs" />
+-    <Compile Include="Temp.cs" />
+-    <Compile Include="TempClass.cs" />
+-    <Compile Include="TempPath.cs" />
+-    <Compile Include="TempStrengthCalc.cs" />
+-    <Compile Include="TestScript.cs" />
+-    <Compile Include="UIControl.cs" />
+-    <Compile Include="WarResult.cs" />
+-    <Compile Include="WarResultPanel.cs" />
+-    <Compile Include="WarStatus.cs" />
++    <Reference Include="Apple">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Apple.dll</HintPath>
++    </Reference>
++    <Reference Include="Assembly-CSharp-firstpass">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Assembly-CSharp-firstpass.dll</HintPath>
++    </Reference>
++    <Reference Include="Assembly-CSharp-mod">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Assembly-CSharp-mod.dll</HintPath>
++    </Reference>
++    <Reference Include="AstarPathfindingProject">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\AstarPathfindingProject.dll</HintPath>
++    </Reference>
++    <Reference Include="ChannelPurchase">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\ChannelPurchase.dll</HintPath>
++    </Reference>
++    <Reference Include="FacebookStore">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\FacebookStore.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Analytics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Analytics.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.App">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.App.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Auth">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Auth.dll</HintPath>
++    </Reference>
++    <Reference Include="Firebase.Platform">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Firebase.Platform.dll</HintPath>
++    </Reference>
++    <Reference Include="Google.MiniJson">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Google.MiniJson.dll</HintPath>
++    </Reference>
++    <Reference Include="Mono.Security">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Mono.Security.dll</HintPath>
++    </Reference>
++    <Reference Include="mscorlib">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\mscorlib.dll</HintPath>
++    </Reference>
++    <Reference Include="netstandard">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\netstandard.dll</HintPath>
++    </Reference>
++    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
++    </Reference>
++    <Reference Include="Purchasing.Common">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Purchasing.Common.dll</HintPath>
++    </Reference>
++    <Reference Include="Security">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Security.dll</HintPath>
++    </Reference>
++    <Reference Include="Stores">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Stores.dll</HintPath>
++    </Reference>
++    <Reference Include="System.ComponentModel.Composition">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.ComponentModel.Composition.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Configuration">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Configuration.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Core">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Core.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Data">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Data.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Diagnostics.StackTrace">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Diagnostics.StackTrace.dll</HintPath>
++    </Reference>
++    <Reference Include="System">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Drawing">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Drawing.dll</HintPath>
++    </Reference>
++    <Reference Include="System.EnterpriseServices">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.EnterpriseServices.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Globalization.Extensions">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Globalization.Extensions.dll</HintPath>
++    </Reference>
++    <Reference Include="System.IO.Compression">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.IO.Compression.dll</HintPath>
++    </Reference>
++    <Reference Include="System.IO.Compression.FileSystem">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.IO.Compression.FileSystem.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Net.Http">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Net.Http.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Numerics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Numerics.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Runtime.Serialization.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Runtime.Serialization.Xml">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Runtime.Serialization.Xml.dll</HintPath>
++    </Reference>
++    <Reference Include="System.ServiceModel.Internals">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.ServiceModel.Internals.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Transactions">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Transactions.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml.Linq">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.Linq.dll</HintPath>
++    </Reference>
++    <Reference Include="System.Xml.XPath.XDocument">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\System.Xml.XPath.XDocument.dll</HintPath>
++    </Reference>
++    <Reference Include="Tizen">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Tizen.dll</HintPath>
++    </Reference>
++    <Reference Include="UDP">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UDP.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Analytics.DataPrivacy">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Analytics.DataPrivacy.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Analytics.StandardEvents">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Analytics.StandardEvents.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Compat">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Compat.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.Tasks">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.Tasks.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.TextMeshPro">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.TextMeshPro.dll</HintPath>
++    </Reference>
++    <Reference Include="Unity.VectorGraphics">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\Unity.VectorGraphics.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AccessibilityModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AccessibilityModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AnimationModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AnimationModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ARModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ARModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AssetBundleModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AssetBundleModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.AudioModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.AudioModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.BaselibModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.BaselibModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClothModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClothModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClusterInputModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClusterInputModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ClusterRendererModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ClusterRendererModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.CoreModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.CoreModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.CrashReportingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.CrashReportingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.DirectorModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.DirectorModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.FileSystemHttpModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.FileSystemHttpModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.GameCenterModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.GameCenterModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.GridModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.GridModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.HotReloadModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.HotReloadModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ImageConversionModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ImageConversionModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.IMGUIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.IMGUIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.InputModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.InputModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.JSONSerializeModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.JSONSerializeModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.LocalizationModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.LocalizationModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Networking">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Networking.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ParticleSystemModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ParticleSystemModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.PerformanceReportingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.PerformanceReportingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Physics2DModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Physics2DModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.PhysicsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.PhysicsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ProfilerModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ProfilerModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Purchasing">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Purchasing.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.ScreenCaptureModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.ScreenCaptureModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SharedInternalsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SharedInternalsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpatialTracking">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpatialTracking.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpriteMaskModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpriteMaskModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SpriteShapeModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SpriteShapeModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.StreamingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.StreamingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.StyleSheetsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.StyleSheetsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.SubstanceModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.SubstanceModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TerrainModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TerrainModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TerrainPhysicsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TerrainPhysicsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TextCoreModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TextCoreModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TextRenderingModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TextRenderingModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TilemapModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TilemapModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.Timeline">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.Timeline.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TimelineModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TimelineModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.TLSModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.TLSModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UI">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UI.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UIElementsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UIElementsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UIModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UIModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UmbraModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UmbraModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UNETModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UNETModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityAnalyticsModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityAnalyticsModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityConnectModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityConnectModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityTestProtocolModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityTestProtocolModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VehiclesModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VehiclesModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VFXModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VFXModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VideoModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VideoModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.VRModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.VRModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.WindModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.WindModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityEngine.XRModule">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityEngine.XRModule.dll</HintPath>
++    </Reference>
++    <Reference Include="UnityStore">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\UnityStore.dll</HintPath>
++    </Reference>
++    <Reference Include="winrt">
++      <HintPath>c:\Users\pc\Desktop\dictators-no-peacemod\include\winrt.dll</HintPath>
++    </Reference>
+   </ItemGroup>
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+ </Project>
+\ No newline at end of file

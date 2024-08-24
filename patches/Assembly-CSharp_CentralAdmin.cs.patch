@@ -1,0 +1,313 @@
+--- decompiled_assembly/Assembly-CSharp/CentralAdmin.cs	2024-08-25 01:50:00.311210500 +0300
++++ work/Assembly-CSharp/CentralAdmin.cs	2024-08-25 01:50:00.853209900 +0300
+@@ -1,10 +1,17 @@
+ using System;
+ using System.Collections.Generic;
++using System.Linq;
++using System.Text.RegularExpressions;
+ using TMPro;
+ using UnityEngine;
+ 
+ public class CentralAdmin : MonoBehaviour
+ {
++	public static string[] SplitStringUsingRegex(string input, string pattern)
++	{
++		return Regex.Split(input, pattern);
++	}
++
+ 	public int GetYear()
+ 	{
+ 		return this.year;
+@@ -25,12 +32,102 @@
+ 		return this.goldPerSecond;
+ 	}
+ 
++	public Country[] findCountriesByAbs(string[] abs)
++	{
++		List<Country> list = new List<Country>();
++		foreach (Country country in this.allCountries)
++		{
++			if (Enumerable.Contains<string>(abs, country.countryAb))
++			{
++				list.Add(country);
++			}
++		}
++		return list.ToArray();
++	}
++
+ 	private void Awake()
+ 	{
+ 		if (CentralAdmin.instance == null)
+ 		{
+ 			CentralAdmin.instance = this;
+ 		}
++		CentralAdmin.GOD_MODE = new ModCommand("godmode", "sets godmode on or off, will win any war", "godmode", delegate
++		{
++			AiMilitary.godmodeEnabled = !AiMilitary.godmodeEnabled;
++			global::Logger.ActiveLogger.Log("Godmode is now set to " + AiMilitary.godmodeEnabled.ToString());
++		});
++		CentralAdmin.ADD_GOLD = new ModCommand<int>("add_gold", "adds gold in a given amount", "add_gold <gold num>", delegate(int x)
++		{
++			this.AddGold((float)x);
++		});
++		CentralAdmin.DISCOVER = new ModCommand<string[]>("discover", "discover a country", "discover <3letter country code> (all for all)", delegate(string[] x)
++		{
++			Country[] array;
++			if (Enumerable.Contains<string>(x, "all"))
++			{
++				array = this.allCountries.ToArray();
++			}
++			else
++			{
++				array = this.findCountriesByAbs(x);
++			}
++			foreach (Country country in array)
++			{
++				CountryStatus countryStatus = country.GetCountryStatus();
++				if (countryStatus != CountryStatus.HIDDENNOTFREE)
++				{
++					if (countryStatus == CountryStatus.HIDDENFREE)
++					{
++						country.SetCountryStatus(CountryStatus.FOUNDFREE);
++					}
++				}
++				else
++				{
++					country.SetCountryStatus(CountryStatus.FOUNDNOTFREE);
++				}
++			}
++		});
++		CentralAdmin.COLONIZE = new ModCommand<string[]>("colonize", "colonize a country", "colonize <3letter country code> (all for all)", delegate(string[] x)
++		{
++			Country[] array3;
++			if (Enumerable.Contains<string>(x, "all"))
++			{
++				array3 = this.allCountries.ToArray();
++			}
++			else
++			{
++				array3 = this.findCountriesByAbs(x);
++			}
++			foreach (Country country2 in array3)
++			{
++				CountryStatus countryStatus2 = country2.GetCountryStatus();
++				if (countryStatus2 != CountryStatus.COLONIZED && countryStatus2 != CountryStatus.ROYALEMPIRE)
++				{
++					this.AddToColonized(country2);
++					country2.SetCountryStatus(CountryStatus.COLONIZED);
++				}
++			}
++		});
++		CentralAdmin.SET_CAMERA_PAN_SPEED = new ModCommand<float>("camera_speed", "sets and saves the camera panning speed", "camera_speed <speed num>", delegate(float x)
++		{
++			CameraMovement.instance.saveMouseSpeed(x);
++		});
++		CentralAdmin.HELP = new ModCommand("help", "shows the help menu in the command log", "help", delegate
++		{
++			foreach (object obj in this.commandList)
++			{
++				ModCommandBase modCommandBase = (ModCommandBase)obj;
++				CentralAdmin.commandLog.Add(string.Concat(new string[] { modCommandBase.commandId, " - ", modCommandBase.commandDescription, " - ", modCommandBase.commandFormat }));
++			}
++		});
++		List<object> list = new List<object>();
++		list.Add(CentralAdmin.ADD_GOLD);
++		list.Add(CentralAdmin.SET_CAMERA_PAN_SPEED);
++		list.Add(CentralAdmin.GOD_MODE);
++		list.Add(CentralAdmin.HELP);
++		list.Add(CentralAdmin.DISCOVER);
++		list.Add(CentralAdmin.COLONIZE);
++		this.commandList = list;
+ 	}
+ 
+ 	public void AutoSaveGame()
+@@ -47,11 +144,6 @@
+ 		base.InvokeRepeating("AutoSaveGame", 600f, 600f);
+ 	}
+ 
+-	public void CreateUser()
+-	{
+-		GameSession.instance.TempSignIn();
+-	}
+-
+ 	private void StartGame()
+ 	{
+ 		this.colonizedCountries.Clear();
+@@ -284,8 +376,47 @@
+ 		this.royalCountry.UpdateCanvas();
+ 	}
+ 
++	private void HandleConsoleInput()
++	{
++		string[] array = CentralAdmin.SplitStringUsingRegex(this.consoleInput, " ");
++		for (int i = 0; i < this.commandList.Count; i++)
++		{
++			ModCommandBase modCommandBase = this.commandList[i] as ModCommandBase;
++			if (this.consoleInput.Contains(modCommandBase.commandId))
++			{
++				if (this.commandList[i] is ModCommand)
++				{
++					(this.commandList[i] as ModCommand).Invoke();
++				}
++				else if (this.commandList[i] is ModCommand<int>)
++				{
++					(this.commandList[i] as ModCommand<int>).Invoke(int.Parse(array[1]));
++				}
++				else if (this.commandList[i] is ModCommand<float>)
++				{
++					(this.commandList[i] as ModCommand<float>).Invoke(float.Parse(array[1]));
++				}
++				else if (this.commandList[i] is ModCommand<string[]>)
++				{
++					string[] array2 = new string[array.Length - 1];
++					Array.Copy(array, 1, array2, 0, array2.Length);
++					(this.commandList[i] as ModCommand<string[]>).Invoke(array2);
++				}
++			}
++		}
++	}
++
+ 	private void Update()
+ 	{
++		if (Input.GetKeyDown(KeyCode.BackQuote))
++		{
++			this.showConsole = !this.showConsole;
++		}
++		else if (Input.GetKeyDown(KeyCode.Return) && this.showConsole)
++		{
++			this.HandleConsoleInput();
++			this.consoleInput = "";
++		}
+ 		if (CameraMovement.instance.satelliteView)
+ 		{
+ 			if (AiMilitary.instance.warStatus == WarStatus.ATWAR || AiMilitary.instance.warStatus == WarStatus.GOINGTOWAR)
+@@ -308,26 +439,46 @@
+ 			{
+ 				this.CelebrateVictory();
+ 				this.celebratedVictory = true;
+-				return;
+ 			}
++			return;
+ 		}
+-		else
++		this.rebelTimer += Time.deltaTime;
++		if (this.rebelTimer > this.initialRebelInterval)
+ 		{
+-			this.rebelTimer += Time.deltaTime;
+-			if (this.rebelTimer > this.initialRebelInterval)
+-			{
+-				this.rebelTimer = 0f;
+-				this.StartRebel();
+-			}
+-			this.foreignAttackTimer += Time.deltaTime;
+-			if (this.foreignAttackTimer > this.initialForeignAttackInterval)
+-			{
+-				this.foreignAttackTimer = 0f;
+-				this.StartForeignAttack();
+-			}
++			this.rebelTimer = 0f;
++			this.StartRebel();
++		}
++		this.foreignAttackTimer += Time.deltaTime;
++		if (this.foreignAttackTimer > this.initialForeignAttackInterval)
++		{
++			this.foreignAttackTimer = 0f;
++			this.StartForeignAttack();
+ 		}
+ 	}
+ 
++	private void OnGUI()
++	{
++		if (!this.showConsole)
++		{
++			return;
++		}
++		float num = (float)(Screen.height - 130);
++		float num2 = (float)Mathf.Min(20 * CentralAdmin.commandLog.Count, 90);
++		GUI.Box(new Rect(0f, num, (float)Screen.width, 100f), "");
++		Rect rect = new Rect(0f, num + 5f, (float)(Screen.width - 30), num2);
++		this.consoleScroll = GUI.BeginScrollView(rect, this.consoleScroll, new Rect(0f, 0f, rect.width - 16f, (float)(20 * CentralAdmin.commandLog.Count)));
++		for (int i = 0; i < CentralAdmin.commandLog.Count; i++)
++		{
++			string text = CentralAdmin.commandLog[i];
++			GUI.Label(new Rect(5f, (float)(20 * i), rect.width - 100f, 20f), text);
++		}
++		GUI.EndScrollView();
++		float num3 = num + num2 + 10f;
++		GUI.Box(new Rect(0f, num3, (float)Screen.width, 30f), "");
++		GUI.backgroundColor = new Color(0f, 0f, 0f, 0f);
++		this.consoleInput = GUI.TextField(new Rect(10f, num3 + 5f, (float)Screen.width - 20f, 20f), this.consoleInput);
++	}
++
+ 	private void CelebrateVictory()
+ 	{
+ 		this.AddToMessagesList(new MessageInfo
+@@ -460,12 +611,12 @@
+ 			{
+ 				num = 60f;
+ 			}
+-			messageInfo.message = string.Concat(new object[]
++			messageInfo.message = string.Concat(new string[]
+ 			{
+ 				LocalizationManager.instance.GetLocalizedValue("for7"),
+ 				LocalizationManager.instance.GetLocalizedValue(this.rebelWarCountry.countryAb),
+ 				LocalizationManager.instance.GetLocalizedValue("reb2"),
+-				num,
++				num.ToString(),
+ 				"\n(",
+ 				LocalizationManager.instance.GetLocalizedValue(this.rebelWarCountry.countryAb),
+ 				")"
+@@ -600,6 +751,14 @@
+ 		this.gold -= (double)amount;
+ 	}
+ 
++	public void AddToColonizedByAb(string ab)
++	{
++		foreach (Country country in this.allCountries)
++		{
++			country.countryAb == ab;
++		}
++	}
++
+ 	public void AddToColonized(Country country)
+ 	{
+ 		for (int i = 0; i < this.uncolonizedCountries.Count; i++)
+@@ -822,10 +981,38 @@
+ 		base..ctor();
+ 	}
+ 
++	// Note: this type is marked as 'beforefieldinit'.
++	static CentralAdmin()
++	{
++		CentralAdmin.commandLog = new List<string>();
++	}
++
+ 	public float timeData;
+ 
+ 	public int colorID;
+ 
++	private bool showConsole;
++
++	private string consoleInput;
++
++	public static ModCommand<int> ADD_GOLD;
++
++	public static ModCommand<float> SET_CAMERA_PAN_SPEED;
++
++	public static ModCommand GOD_MODE;
++
++	public static ModCommand HELP;
++
++	public static ModCommand<string[]> DISCOVER;
++
++	public static ModCommand<string[]> COLONIZE;
++
++	public static List<string> commandLog;
++
++	private Vector2 consoleScroll;
++
++	public List<object> commandList;
++
+ 	[SerializeField]
+ 	private TextMeshProUGUI deltaTime;
+ 

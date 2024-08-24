@@ -1,0 +1,354 @@
+--- decompiled_assembly/Assembly-CSharp/AiMilitary.cs	2024-08-25 01:50:00.236209200 +0300
++++ work/Assembly-CSharp/AiMilitary.cs	2024-08-25 01:50:00.772210000 +0300
+@@ -172,105 +172,106 @@
+ 	public void EndWar()
+ 	{
+ 		UIControl.instance.warSoundSource.Stop();
+-		if (this.warStatus == WarStatus.ATWAR || this.warStatus == WarStatus.GOINGTOWAR)
++		if (this.warStatus != WarStatus.ATWAR && this.warStatus != WarStatus.GOINGTOWAR)
++		{
++			return;
++		}
++		this.warStatus = WarStatus.ENDWAR;
++		if (this.startExplosion)
++		{
++			this.EndExplosions();
++		}
++		this.RotateMilitary();
++		MessageInfo messageInfo = new MessageInfo();
++		if (this.wonWar)
+ 		{
+-			this.warStatus = WarStatus.ENDWAR;
+-			if (this.startExplosion)
++			UIControl.instance.colonisedSound.Play();
++			UIControl.instance.colonisedSound.PlayDelayed(0.5f);
++			messageInfo = this.SetupToastPanel();
++			this.warCountry.SetCountryStatus(CountryStatus.COLONIZED);
++			if (this.warCountry.myRuler)
+ 			{
+-				this.EndExplosions();
++				this.warCountry.myRuler.RemoveColony(this.warCountry);
++				this.warCountry.myRuler = null;
+ 			}
+-			this.RotateMilitary();
+-			MessageInfo messageInfo = new MessageInfo();
+-			if (this.wonWar)
++			if (this.warCountry.myColonies.Count != 0)
+ 			{
+-				UIControl.instance.colonisedSound.Play();
+-				UIControl.instance.colonisedSound.PlayDelayed(0.5f);
+-				messageInfo = this.SetupToastPanel();
+-				this.warCountry.SetCountryStatus(CountryStatus.COLONIZED);
+-				if (this.warCountry.myRuler)
+-				{
+-					this.warCountry.myRuler.RemoveColony(this.warCountry);
+-					this.warCountry.myRuler = null;
+-				}
+-				if (this.warCountry.myColonies.Count != 0)
+-				{
+-					this.warCountry.FreeAllColonies();
+-				}
+-				CentralAdmin.instance.AddToColonized(this.warCountry);
+-				if (this.warCountry.forArmyButton)
+-				{
+-					this.warCountry.foreignArmyStrength = 0f;
+-				}
+-				this.warCountry.army.SetStrengthLevel(0);
+-				this.warCountry.rebel.SetToZero();
+-				if (this.warCountry.forNavyButton)
+-				{
+-					this.warCountry.foreignNavyStrength = 0f;
+-				}
+-				if (this.warCountry.localNavyButton)
+-				{
+-					this.warCountry.navy.SetStrengthLevel(0);
+-				}
+-				if (this.warCountry.forAirForceButton)
+-				{
+-					this.warCountry.foreignAirForceStrength = 0f;
+-				}
+-				if (this.warCountry.localAirForceButton)
+-				{
+-					this.warCountry.airForce.SetStrengthLevel(0);
+-				}
++				this.warCountry.FreeAllColonies();
+ 			}
+-			else
++			CentralAdmin.instance.AddToColonized(this.warCountry);
++			if (this.warCountry.forArmyButton)
+ 			{
+-				this.warCountry.army.currentStrength = this.tempWarCountryArmyStrength;
+-				this.warCountry.foreignArmyStrength = this.tempWarCountryForArmyStrength;
+-				if (this.warCountry.localNavyButton)
+-				{
+-					this.warCountry.navy.currentStrength = this.tempWarCountryNavyStrength;
+-					this.warCountry.foreignNavyStrength = this.tempWarCountryForNavyStrength;
+-				}
+-				if (this.warCountry.localAirForceButton)
+-				{
+-					this.warCountry.airForce.currentStrength = this.tempWarCountryAirForceStrength;
+-					this.warCountry.foreignAirForceStrength = this.tempWarCountryForAirForceStrength;
+-				}
+-				messageInfo = this.SetupToastPanel();
++				this.warCountry.foreignArmyStrength = 0f;
++			}
++			this.warCountry.army.SetStrengthLevel(0);
++			this.warCountry.rebel.SetToZero();
++			if (this.warCountry.forNavyButton)
++			{
++				this.warCountry.foreignNavyStrength = 0f;
+ 			}
+-			this.warCountry.armyStarFilled.fillAmount = this.warCountry.army.currentStrength / 100f;
+-			if (this.warCountry.rebelStarFilled)
++			if (this.warCountry.localNavyButton)
+ 			{
+-				this.warCountry.rebelStarFilled.fillAmount = this.warCountry.rebel.currentStrength / 60f;
++				this.warCountry.navy.SetStrengthLevel(0);
+ 			}
+-			if (this.warCountry.forArmyStarFilled)
++			if (this.warCountry.forAirForceButton)
+ 			{
+-				this.warCountry.forArmyStarFilled.fillAmount = this.warCountry.foreignArmyStrength / 100f;
++				this.warCountry.foreignAirForceStrength = 0f;
+ 			}
++			if (this.warCountry.localAirForceButton)
++			{
++				this.warCountry.airForce.SetStrengthLevel(0);
++			}
++		}
++		else
++		{
++			this.warCountry.army.currentStrength = this.tempWarCountryArmyStrength;
++			this.warCountry.foreignArmyStrength = this.tempWarCountryForArmyStrength;
+ 			if (this.warCountry.localNavyButton)
+ 			{
+-				this.warCountry.navyStarFilled.fillAmount = this.warCountry.navy.currentStrength / 100f;
+-				if (this.warCountry.forNavyStarFilled)
+-				{
+-					this.warCountry.forNavyStarFilled.fillAmount = this.warCountry.foreignNavyStrength / 100f;
+-				}
++				this.warCountry.navy.currentStrength = this.tempWarCountryNavyStrength;
++				this.warCountry.foreignNavyStrength = this.tempWarCountryForNavyStrength;
+ 			}
+ 			if (this.warCountry.localAirForceButton)
+ 			{
+-				this.warCountry.airForceStarFilled.fillAmount = this.warCountry.airForce.currentStrength / 100f;
+-				if (this.warCountry.forAirForceStarFilled)
+-				{
+-					this.warCountry.forAirForceStarFilled.fillAmount = this.warCountry.foreignAirForceStrength / 100f;
+-				}
++				this.warCountry.airForce.currentStrength = this.tempWarCountryAirForceStrength;
++				this.warCountry.foreignAirForceStrength = this.tempWarCountryForAirForceStrength;
++			}
++			messageInfo = this.SetupToastPanel();
++		}
++		this.warCountry.armyStarFilled.fillAmount = this.warCountry.army.currentStrength / 100f;
++		if (this.warCountry.rebelStarFilled)
++		{
++			this.warCountry.rebelStarFilled.fillAmount = this.warCountry.rebel.currentStrength / 60f;
++		}
++		if (this.warCountry.forArmyStarFilled)
++		{
++			this.warCountry.forArmyStarFilled.fillAmount = this.warCountry.foreignArmyStrength / 100f;
++		}
++		if (this.warCountry.localNavyButton)
++		{
++			this.warCountry.navyStarFilled.fillAmount = this.warCountry.navy.currentStrength / 100f;
++			if (this.warCountry.forNavyStarFilled)
++			{
++				this.warCountry.forNavyStarFilled.fillAmount = this.warCountry.foreignNavyStrength / 100f;
++			}
++		}
++		if (this.warCountry.localAirForceButton)
++		{
++			this.warCountry.airForceStarFilled.fillAmount = this.warCountry.airForce.currentStrength / 100f;
++			if (this.warCountry.forAirForceStarFilled)
++			{
++				this.warCountry.forAirForceStarFilled.fillAmount = this.warCountry.foreignAirForceStrength / 100f;
+ 			}
+-			this.royalArmy.GetComponent<ArmyAi>().EndingWar(this.myCountry);
+-			this.royalNavy.GetComponent<NavyAi>().EndingWar(this.myCountry);
+-			this.royalAirForce.GetComponent<AirForceAI>().EndingWar(this.myCountry);
+-			this.rotateMilitary = false;
+-			UIControl.instance.OpenWarResultPanel(messageInfo);
+-			messageInfo.subject = LocalizationManager.instance.GetLocalizedValue("res8") + LocalizationManager.instance.GetLocalizedValue(this.warCountry.countryAb) + "....";
+-			messageInfo.messageType = MessageType.WARREPORT;
+-			CentralAdmin.instance.AddToMessagesList(messageInfo);
+-			this.warStatus = WarStatus.STANDBY;
+ 		}
++		this.royalArmy.GetComponent<ArmyAi>().EndingWar(this.myCountry);
++		this.royalNavy.GetComponent<NavyAi>().EndingWar(this.myCountry);
++		this.royalAirForce.GetComponent<AirForceAI>().EndingWar(this.myCountry);
++		this.rotateMilitary = false;
++		UIControl.instance.OpenWarResultPanel(messageInfo);
++		messageInfo.subject = LocalizationManager.instance.GetLocalizedValue("res8") + LocalizationManager.instance.GetLocalizedValue(this.warCountry.countryAb) + "....";
++		messageInfo.messageType = MessageType.WARREPORT;
++		CentralAdmin.instance.AddToMessagesList(messageInfo);
++		this.warStatus = WarStatus.STANDBY;
+ 	}
+ 
+ 	public void Retreat()
+@@ -285,46 +286,48 @@
+ 
+ 	private void Update()
+ 	{
+-		if (this.warStatus == WarStatus.ATWAR)
++		if (this.warStatus != WarStatus.ATWAR)
++		{
++			return;
++		}
++		if (!this.startExplosion)
++		{
++			this.StartExplosions();
++		}
++		if (!this.rotateMilitary)
++		{
++			this.rotateMilitary = true;
++			this.RotateMilitary();
++		}
++		this.currWarTimeCount += Time.deltaTime;
++		if (this.currWarTimeCount < this.warTimeFactor)
++		{
++			return;
++		}
++		this.currWarTimeCount = 0f;
++		if (!this.hasArmyWarEnded)
++		{
++			this.SimulateArmyWar();
++		}
++		if (!this.hasNavyWarEnded)
++		{
++			this.SimulateNavyWar();
++		}
++		if (!this.hasAirForceWarEnded)
++		{
++			this.SimulateAirForceWar();
++		}
++		if (this.HasWarEnded())
+ 		{
+-			if (!this.startExplosion)
++			if ((this.armyWonWar && this.navyWonWar && this.airForceWonWar) || AiMilitary.godmodeEnabled)
+ 			{
+-				this.StartExplosions();
++				this.wonWar = true;
+ 			}
+-			if (!this.rotateMilitary)
++			else
+ 			{
+-				this.rotateMilitary = true;
+-				this.RotateMilitary();
+-			}
+-			this.currWarTimeCount += Time.deltaTime;
+-			if (this.currWarTimeCount >= this.warTimeFactor)
+-			{
+-				this.currWarTimeCount = 0f;
+-				if (!this.hasArmyWarEnded)
+-				{
+-					this.SimulateArmyWar();
+-				}
+-				if (!this.hasNavyWarEnded)
+-				{
+-					this.SimulateNavyWar();
+-				}
+-				if (!this.hasAirForceWarEnded)
+-				{
+-					this.SimulateAirForceWar();
+-				}
+-				if (this.HasWarEnded())
+-				{
+-					if (this.armyWonWar && this.navyWonWar && this.airForceWonWar)
+-					{
+-						this.wonWar = true;
+-					}
+-					else
+-					{
+-						this.wonWar = false;
+-					}
+-					this.EndWar();
+-				}
++				this.wonWar = false;
+ 			}
++			this.EndWar();
+ 		}
+ 	}
+ 
+@@ -745,8 +748,12 @@
+ 				}
+ 			}
+ 		}
+-		else if (this.warStatus == WarStatus.ENDWAR)
++		else
+ 		{
++			if (this.warStatus != WarStatus.ENDWAR)
++			{
++				return;
++			}
+ 			this.SetToOriginal(this.royalArmy);
+ 			this.SetToOriginal(this.warCountry.localArmyButton);
+ 			this.SetToOriginal(this.royalNavy);
+@@ -818,8 +825,12 @@
+ 				}
+ 			}
+ 		}
+-		else if (this.warStatus == WarStatus.ENDWAR)
++		else
+ 		{
++			if (this.warStatus != WarStatus.ENDWAR)
++			{
++				return;
++			}
+ 			this.royalArmyEyes.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("MilitaryPanel/eyesNormal");
+ 			this.MakeEyesNormal(this.warCountry.localArmyButton);
+ 			if (this.warCountry.localNavyButton)
+@@ -1085,28 +1096,21 @@
+ 			text2 = LocalizationManager.instance.GetLocalizedValue("res24");
+ 			for (int l = 0; l < list.Count; l++)
+ 			{
+-				if (l == list.Count - 1)
++				text2 = ((l != list.Count - 1) ? string.Concat(new string[]
+ 				{
+-					text2 = string.Concat(new object[]
+-					{
+-						text2,
+-						LocalizationManager.instance.GetLocalizedValue(list[l]),
+-						" ",
+-						list2[l],
+-						"."
+-					});
+-				}
+-				else
+-				{
+-					text2 = string.Concat(new object[]
+-					{
+-						text2,
+-						LocalizationManager.instance.GetLocalizedValue(list[l]),
+-						" ",
+-						list2[l],
+-						", "
+-					});
+-				}
++					text2,
++					LocalizationManager.instance.GetLocalizedValue(list[l]),
++					" ",
++					list2[l].ToString(),
++					", "
++				}) : string.Concat(new string[]
++				{
++					text2,
++					LocalizationManager.instance.GetLocalizedValue(list[l]),
++					" ",
++					list2[l].ToString(),
++					"."
++				}));
+ 			}
+ 		}
+ 		messageInfo.message = text2;
+@@ -1127,6 +1131,8 @@
+ 
+ 	public Country warCountry;
+ 
++	public static bool godmodeEnabled;
++
+ 	[SerializeField]
+ 	private float warTimeFactor;
+ 

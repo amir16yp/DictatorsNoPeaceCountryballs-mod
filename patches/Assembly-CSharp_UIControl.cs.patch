@@ -1,0 +1,62 @@
+--- decompiled_assembly/Assembly-CSharp/UIControl.cs	2024-08-25 01:50:00.736210300 +0300
++++ work/Assembly-CSharp/UIControl.cs	2024-08-25 01:50:01.253211500 +0300
+@@ -59,23 +59,24 @@
+ 
+ 	private void PlayMusic()
+ 	{
+-		if (!this.musicSource.isPlaying)
++		if (this.musicSource.isPlaying)
+ 		{
+-			this.currentLoop++;
+-			if (this.currentLoop > this.musicFiles[this.songNum].loopCount)
++			return;
++		}
++		this.currentLoop++;
++		if (this.currentLoop > this.musicFiles[this.songNum].loopCount)
++		{
++			this.songNum++;
++			if (this.songNum >= this.musicFiles.Count)
+ 			{
+-				this.songNum++;
+-				if (this.songNum >= this.musicFiles.Count)
+-				{
+-					this.songNum = 0;
+-				}
+-				this.currentLoop = 1;
+-				this.musicSource.clip = this.musicFiles[this.songNum].musicFile;
+-				this.musicSource.PlayDelayed(5f);
+-				return;
++				this.songNum = 0;
+ 			}
+-			this.musicSource.PlayOneShot(this.musicFiles[this.songNum].musicFile);
++			this.currentLoop = 1;
++			this.musicSource.clip = this.musicFiles[this.songNum].musicFile;
++			this.musicSource.PlayDelayed(5f);
++			return;
+ 		}
++		this.musicSource.PlayOneShot(this.musicFiles[this.songNum].musicFile);
+ 	}
+ 
+ 	private void UpdateYearTexts()
+@@ -258,13 +259,16 @@
+ 			UIControl.instance.protectorPanel.enabled = true;
+ 			this.panEnabled = false;
+ 			CountryStatus countryStatus = country.GetCountryStatus();
+-			if (countryStatus == CountryStatus.COLONIZED)
++			if (countryStatus - CountryStatus.FOUNDFREE > 1)
+ 			{
+-				this.rebelColonizedPanel.GetComponent<RebelColonizedPanel>().SetCountry(country);
+-				this.rebelColonizedPanel.SetActive(true);
+-				return;
++				if (countryStatus == CountryStatus.COLONIZED)
++				{
++					this.rebelColonizedPanel.GetComponent<RebelColonizedPanel>().SetCountry(country);
++					this.rebelColonizedPanel.SetActive(true);
++					return;
++				}
+ 			}
+-			if (countryStatus == CountryStatus.FOUNDFREE || countryStatus == CountryStatus.FOUNDNOTFREE)
++			else
+ 			{
+ 				this.rebelIndependentPanel.GetComponent<RebelIndependentPanel>().SetCountry(country);
+ 				this.rebelIndependentPanel.SetActive(true);

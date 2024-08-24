@@ -1,0 +1,97 @@
+--- decompiled_assembly/Assembly-CSharp/MissilePanel.cs	2024-08-25 01:50:00.507210100 +0300
++++ work/Assembly-CSharp/MissilePanel.cs	2024-08-25 01:50:01.038210100 +0300
+@@ -146,34 +146,35 @@
+ 
+ 	public void Check()
+ 	{
+-		if (!this.gotCode)
++		if (this.gotCode)
+ 		{
+-			if (CentralAdmin.instance.countriesLeft > 0)
++			return;
++		}
++		if (CentralAdmin.instance.countriesLeft > 0)
++		{
++			this.getCodeButton.gameObject.SetActive(false);
++			if (CentralAdmin.instance.countriesLeft > CentralAdmin.instance.uncolonizedCountries.Count && CentralAdmin.instance.uncolonizedCountries.Count > 0)
+ 			{
+-				this.getCodeButton.gameObject.SetActive(false);
+-				if (CentralAdmin.instance.countriesLeft > CentralAdmin.instance.uncolonizedCountries.Count && CentralAdmin.instance.uncolonizedCountries.Count > 0)
+-				{
+-					CentralAdmin.instance.countriesLeft = CentralAdmin.instance.uncolonizedCountries.Count - 1;
+-					CentralAdmin.instance.FillMissileButtonImage();
+-				}
+-				this.rememberCodeText.text = LocalizationManager.instance.GetLocalizedValue("nuke3") + CentralAdmin.instance.countriesLeft;
+-				if (CentralAdmin.instance.uncolonizedCountries.Count < 1)
+-				{
+-					this.rememberCodeText.text = LocalizationManager.instance.GetLocalizedValue("nuke4");
+-					return;
+-				}
++				CentralAdmin.instance.countriesLeft = CentralAdmin.instance.uncolonizedCountries.Count - 1;
++				CentralAdmin.instance.FillMissileButtonImage();
+ 			}
+-			else
++			this.rememberCodeText.text = LocalizationManager.instance.GetLocalizedValue("nuke3") + CentralAdmin.instance.countriesLeft.ToString();
++			if (CentralAdmin.instance.uncolonizedCountries.Count < 1)
+ 			{
+-				if (CentralAdmin.instance.nuclearAttack.nuclearStatus == NuclearAttackStatus.STARTED)
+-				{
+-					this.getCodeButton.gameObject.SetActive(false);
+-					this.rememberCodeText.text = LocalizationManager.instance.GetLocalizedValue("nuke5");
+-					return;
+-				}
+-				this.getCodeButton.gameObject.SetActive(true);
+-				this.rememberCodeText.text = "";
++				this.rememberCodeText.text = LocalizationManager.instance.GetLocalizedValue("nuke4");
++				return;
++			}
++		}
++		else
++		{
++			if (CentralAdmin.instance.nuclearAttack.nuclearStatus == NuclearAttackStatus.STARTED)
++			{
++				this.getCodeButton.gameObject.SetActive(false);
++				this.rememberCodeText.text = LocalizationManager.instance.GetLocalizedValue("nuke5");
++				return;
+ 			}
++			this.getCodeButton.gameObject.SetActive(true);
++			this.rememberCodeText.text = "";
+ 		}
+ 	}
+ 
+@@ -191,15 +192,15 @@
+ 		switch (this.enteredCode.Length)
+ 		{
+ 		case 0:
+-			this.enteredCode += pressed;
++			this.enteredCode += pressed.ToString();
+ 			this.enteredCodeText.text = this.enteredCode + "__";
+ 			return;
+ 		case 1:
+-			this.enteredCode += pressed;
++			this.enteredCode += pressed.ToString();
+ 			this.enteredCodeText.text = this.enteredCode + "_";
+ 			return;
+ 		case 2:
+-			this.enteredCode += pressed;
++			this.enteredCode += pressed.ToString();
+ 			this.enteredCodeText.text = this.enteredCode;
+ 			return;
+ 		default:
+@@ -216,14 +217,14 @@
+ 	public void EnterCode()
+ 	{
+ 		int num = 0;
+-		int.TryParse(this.enteredCode, out num);
++		int.TryParse(this.enteredCode, ref num);
+ 		if (this.code == num)
+ 		{
+ 			this.StartSelectCountryPanel();
+ 			return;
+ 		}
+ 		this.warningPanel.SetActive(true);
+-		this.warningText.text = LocalizationManager.instance.GetLocalizedValue("nuke7") + this.code;
++		this.warningText.text = LocalizationManager.instance.GetLocalizedValue("nuke7") + this.code.ToString();
+ 	}
+ 
+ 	private void StartSelectCountryPanel()

@@ -1,0 +1,41 @@
+using System;
+
+public class ModCommandBase
+{
+	public string commandId
+	{
+		get
+		{
+			return this._commandId;
+		}
+	}
+
+	public string commandDescription
+	{
+		get
+		{
+			return this._commandDescription;
+		}
+	}
+
+	public string commandFormat
+	{
+		get
+		{
+			return this._commandFormat;
+		}
+	}
+
+	public ModCommandBase(string id, string description, string format)
+	{
+		this._commandId = id;
+		this._commandDescription = description;
+		this._commandFormat = format;
+	}
+
+	private string _commandId;
+
+	private string _commandDescription;
+
+	private string _commandFormat;
+}

@@ -1,0 +1,70 @@
+--- decompiled_assembly/Assembly-CSharp/WarResultPanel.cs	2024-08-25 01:50:00.749210500 +0300
++++ work/Assembly-CSharp/WarResultPanel.cs	2024-08-25 01:50:01.267210500 +0300
+@@ -78,14 +78,7 @@
+ 		this.myAirForceBall.GetComponent<Image>().sprite = Resources.Load<Sprite>("CountryBalls/" + CentralAdmin.instance.royalCountry.countryName);
+ 		this.myAirForceStrength.text = this.messageInfo.warResult.myAirForceStrength.ToString() + "/100";
+ 		string text = "( " + this.messageInfo.warResult.myAirForceStrength.ToString() + " )";
+-		if (this.messageInfo.warResult.airForceResult == 1)
+-		{
+-			text += " >= ( ";
+-		}
+-		else
+-		{
+-			text += " < ( ";
+-		}
++		text = ((this.messageInfo.warResult.airForceResult != 1) ? (text + " < ( ") : (text + " >= ( "));
+ 		this.enemyAirForceBall.GetComponent<Image>().sprite = Resources.Load<Sprite>("CountryBalls/" + CentralAdmin.instance.allCountries[this.messageInfo.warResult.warCountryId].countryName);
+ 		this.enemyAirForceStrength.text = this.messageInfo.warResult.enemyAirForceStrength.ToString() + "/100";
+ 		text += this.messageInfo.warResult.enemyAirForceStrength.ToString();
+@@ -134,14 +127,7 @@
+ 		this.myNavyBall.GetComponent<Image>().sprite = Resources.Load<Sprite>("CountryBalls/" + CentralAdmin.instance.royalCountry.countryName);
+ 		this.myNavyStrength.text = this.messageInfo.warResult.myNavyStrength.ToString() + "/100";
+ 		string text = "( " + this.messageInfo.warResult.myNavyStrength.ToString() + " )";
+-		if (this.messageInfo.warResult.navyResult == 1)
+-		{
+-			text += " >= ( ";
+-		}
+-		else
+-		{
+-			text += " < ( ";
+-		}
++		text = ((this.messageInfo.warResult.navyResult != 1) ? (text + " < ( ") : (text + " >= ( "));
+ 		this.enemyNavyBall.GetComponent<Image>().sprite = Resources.Load<Sprite>("CountryBalls/" + CentralAdmin.instance.allCountries[this.messageInfo.warResult.warCountryId].countryName);
+ 		this.enemyNavyStrength.text = this.messageInfo.warResult.enemyNavyStrength.ToString() + "/100";
+ 		text += this.messageInfo.warResult.enemyNavyStrength.ToString();
+@@ -177,14 +163,7 @@
+ 		}
+ 		this.myArmyStrength.text = this.messageInfo.warResult.myArmyStrength.ToString() + "/100";
+ 		text = text + this.messageInfo.warResult.myArmyStrength.ToString() + ")";
+-		if (this.messageInfo.warResult.armyResult)
+-		{
+-			text += " >= ";
+-		}
+-		else
+-		{
+-			text += " < ";
+-		}
++		text = ((!this.messageInfo.warResult.armyResult) ? (text + " < ") : (text + " >= "));
+ 		text += "( ";
+ 		this.enemyArmyStrength.text = this.messageInfo.warResult.enemyArmyStrength.ToString() + "/100";
+ 		text += this.messageInfo.warResult.enemyArmyStrength.ToString();
+@@ -200,18 +179,7 @@
+ 			text = text + " + " + this.messageInfo.warResult.forArmyStrength.ToString();
+ 		}
+ 		text += " )\n";
+-		if (this.messageInfo.warResult.overallWarResult == -2)
+-		{
+-			text += LocalizationManager.instance.GetLocalizedValue("res17");
+-		}
+-		else if (this.messageInfo.warResult.armyResult)
+-		{
+-			text += LocalizationManager.instance.GetLocalizedValue("res22");
+-		}
+-		else
+-		{
+-			text += LocalizationManager.instance.GetLocalizedValue("res23");
+-		}
++		text = ((this.messageInfo.warResult.overallWarResult == -2) ? (text + LocalizationManager.instance.GetLocalizedValue("res17")) : ((!this.messageInfo.warResult.armyResult) ? (text + LocalizationManager.instance.GetLocalizedValue("res23")) : (text + LocalizationManager.instance.GetLocalizedValue("res22"))));
+ 		this.armyResultText.text = text;
+ 	}
+ 

@@ -1,0 +1,22 @@
+--- decompiled_assembly/Assembly-CSharp/Planes.cs	2024-08-25 01:50:00.590209700 +0300
++++ work/Assembly-CSharp/Planes.cs	2024-08-25 01:50:01.095210500 +0300
+@@ -13,16 +13,11 @@
+ 
+ 	public void SpawnPlane()
+ 	{
+-		if (this.fighter.isAlive)
++		if (!this.fighter.isAlive && (!this.fighter.hasClicked || Time.time - this.fighter.timeClicked >= this.spawnInterval))
+ 		{
+-			return;
++			this.plane1.GetComponent<FighterPlane>().SpawnMe();
++			this.plane1.SetActive(true);
+ 		}
+-		if (this.fighter.hasClicked && Time.time - this.fighter.timeClicked < this.spawnInterval)
+-		{
+-			return;
+-		}
+-		this.plane1.GetComponent<FighterPlane>().SpawnMe();
+-		this.plane1.SetActive(true);
+ 	}
+ 
+ 	public void PlayExplosion()

@@ -1,0 +1,17 @@
+--- decompiled_assembly/Assembly-CSharp/RoyalArmyPanel.cs	2024-08-25 01:50:00.645212300 +0300
++++ work/Assembly-CSharp/RoyalArmyPanel.cs	2024-08-25 01:50:01.136210300 +0300
+@@ -60,13 +60,7 @@
+ 	{
+ 		UIControl.instance.panEnabled = false;
+ 		float num = this.country.army.CalculateStrength();
+-		this.strengthText.text = string.Concat(new object[]
+-		{
+-			this.strengthString,
+-			num.ToString("0.##"),
+-			"/",
+-			100f
+-		});
++		this.strengthText.text = this.strengthString + num.ToString("0.##") + "/" + 100f.ToString();
+ 		this.stars.fillAmount = num / 100f;
+ 		AiMilitary.instance.royalArmyStar.fillAmount = num / 100f;
+ 		if (AiMilitary.instance.warStatus == WarStatus.ATWAR || AiMilitary.instance.warStatus == WarStatus.GOINGTOWAR)

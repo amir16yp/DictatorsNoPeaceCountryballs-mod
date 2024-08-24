@@ -1,0 +1,17 @@
+--- decompiled_assembly/Assembly-CSharp/RoyalAirForcePanel.cs	2024-08-25 01:50:00.642212700 +0300
++++ work/Assembly-CSharp/RoyalAirForcePanel.cs	2024-08-25 01:50:01.134210300 +0300
+@@ -60,13 +60,7 @@
+ 	{
+ 		UIControl.instance.panEnabled = false;
+ 		float num = this.country.airForce.CalculateStrength();
+-		this.strengthText.text = string.Concat(new object[]
+-		{
+-			this.strengthString,
+-			num.ToString("0.##"),
+-			"/",
+-			100f
+-		});
++		this.strengthText.text = this.strengthString + num.ToString("0.##") + "/" + 100f.ToString();
+ 		this.stars.fillAmount = num / 100f;
+ 		AiMilitary.instance.royalAirForceStar.fillAmount = num / 100f;
+ 		if (AiMilitary.instance.warStatus == WarStatus.ATWAR || AiMilitary.instance.warStatus == WarStatus.GOINGTOWAR)

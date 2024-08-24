@@ -1,0 +1,18 @@
+--- decompiled_assembly/Assembly-CSharp/MainMenuManager.cs	2024-08-25 01:50:00.476210100 +0300
++++ work/Assembly-CSharp/MainMenuManager.cs	2024-08-25 01:50:01.008210200 +0300
+@@ -16,7 +16,6 @@
+ 	private void Start()
+ 	{
+ 		this.volumeSlider.value = PlayerPrefs.GetFloat("Volume", 0.75f);
+-		this.source.volume = this.volumeSlider.value;
+ 		this.source.Play();
+ 		if (!this.levelChanger.activeSelf)
+ 		{
+@@ -26,6 +25,7 @@
+ 
+ 	public void OpenMainMenu()
+ 	{
++		SaveSystem.MigrateDatToJSON();
+ 		this.CloseAllPanels();
+ 		this.mainMenuPanel.SetActive(true);
+ 		if (!GameSession.instance.gamePurchased && PlayerPrefs.GetInt("Purchased", 0) == 1)

@@ -1,0 +1,24 @@
+--- decompiled_assembly/Assembly-CSharp/NavyAi.cs	2024-08-25 01:50:00.524209600 +0300
++++ work/Assembly-CSharp/NavyAi.cs	2024-08-25 01:50:01.061210100 +0300
+@@ -64,17 +64,12 @@
+ 
+ 	private void CheckIfReached()
+ 	{
+-		if (this.currentWaypoint < this.path.vectorPath.Count)
++		if (this.currentWaypoint >= this.path.vectorPath.Count && !this.pathIsEnded)
+ 		{
+-			return;
++			Debug.Log("End of path reached.");
++			this.pathIsEnded = true;
++			this.armyAi.hasReachedTargetCountry = true;
+ 		}
+-		if (this.pathIsEnded)
+-		{
+-			return;
+-		}
+-		Debug.Log("End of path reached.");
+-		this.pathIsEnded = true;
+-		this.armyAi.hasReachedTargetCountry = true;
+ 	}
+ 
+ 	private void Move()

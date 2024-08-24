@@ -1,0 +1,26 @@
+--- decompiled_assembly/Assembly-CSharp/MarketPanel.cs	2024-08-25 01:50:00.482210200 +0300
++++ work/Assembly-CSharp/MarketPanel.cs	2024-08-25 01:50:01.013210200 +0300
+@@ -48,7 +48,7 @@
+ 		{
+ 			this.upgradeCargoButton.interactable = true;
+ 		}
+-		this.increaseCapacityText.text = LocalizationManager.instance.GetLocalizedValue("carg2") + Caravan.instance.quantityCargoCapacityIncrease;
++		this.increaseCapacityText.text = LocalizationManager.instance.GetLocalizedValue("carg2") + Caravan.instance.quantityCargoCapacityIncrease.ToString();
+ 		this.costText.text = Caravan.instance.costCargoCapacityIncrease.ToString("0");
+ 	}
+ 
+@@ -75,13 +75,7 @@
+ 		{
+ 			this.OpenTravelPanel();
+ 		}
+-		this.cargoCapacityText.text = string.Concat(new object[]
+-		{
+-			this.carString1,
+-			Caravan.instance.cargoFilled,
+-			"/",
+-			Caravan.instance.cargoCapacity
+-		});
++		this.cargoCapacityText.text = this.carString1 + Caravan.instance.cargoFilled.ToString() + "/" + Caravan.instance.cargoCapacity.ToString();
+ 		if (Caravan.instance.cargoCapacity < Caravan.instance.maxCargoCapacity && (double)Caravan.instance.costCargoCapacityIncrease < CentralAdmin.instance.gold)
+ 		{
+ 			this.upgradeCargoButton.interactable = true;

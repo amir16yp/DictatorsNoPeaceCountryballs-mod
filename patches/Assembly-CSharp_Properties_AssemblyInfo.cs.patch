@@ -1,0 +1,13 @@
+--- decompiled_assembly/Assembly-CSharp/Properties/AssemblyInfo.cs	2024-08-25 01:50:00.608210000 +0300
++++ work/Assembly-CSharp/Properties/AssemblyInfo.cs	2024-08-25 01:50:01.109209800 +0300
+@@ -2,5 +2,10 @@
+ using System.Diagnostics;
+ using System.Reflection;
+ using System.Runtime.CompilerServices;
++using System.Runtime.Versioning;
++using System.Security;
++using System.Security.Permissions;
+ 
+ [assembly: AssemblyVersion("0.0.0.0")]
++[assembly: SecurityPermission(8, SkipVerification = true)]
++[module: RefSafetyRules(11)]

@@ -1,0 +1,120 @@
+using System;
+using System.IO;
+using UnityEngine;
+
+public static class ModConfig
+{
+	public static void ReadMouseSpeed()
+	{
+		string text = "mouse_speed.mod";
+		if (File.Exists(Path.Combine(Application.persistentDataPath, text)))
+		{
+			ModConfig.mouse_speed = ModConfig.ReadFloat(text);
+			return;
+		}
+		global::Logger.ActiveLogger.Log("MOD config file mouse_speed.mod not found; creating with default value 20f");
+		ModConfig.mouse_speed = 20f;
+		ModConfig.SaveMouseSpeed(ModConfig.mouse_speed, text);
+	}
+
+	private static void SaveMouseSpeed(float speed, string filePath)
+	{
+		string text = Path.Combine(Application.persistentDataPath, filePath);
+		try
+		{
+			using (StreamWriter streamWriter = new StreamWriter(text))
+			{
+				streamWriter.Write(speed.ToString());
+			}
+		}
+		catch (IOException ex)
+		{
+			global::Logger.ActiveLogger.Log("An error occurred while writing the file " + text + ": " + ex.Message);
+		}
+	}
+
+	public static string ReadString(string filePath)
+	{
+		string text = Path.Combine(Application.persistentDataPath, filePath);
+		string text2;
+		try
+		{
+			using (StreamReader streamReader = new StreamReader(text))
+			{
+				text2 = streamReader.ReadLine();
+			}
+		}
+		catch (FileNotFoundException)
+		{
+			global::Logger.ActiveLogger.Log("File not found.");
+			text2 = null;
+		}
+		catch (IOException ex)
+		{
+			global::Logger.ActiveLogger.Log("An error occurred while reading the file: " + ex.Message);
+			text2 = null;
+		}
+		return text2;
+	}
+
+	public static string ReadStringToEnd(string filePath)
+	{
+		string text = Path.Combine(Application.persistentDataPath, filePath);
+		string text2;
+		try
+		{
+			using (StreamReader streamReader = new StreamReader(text))
+			{
+				text2 = streamReader.ReadToEnd();
+			}
+		}
+		catch (FileNotFoundException)
+		{
+			global::Logger.ActiveLogger.Log("File not found.");
+			text2 = null;
+		}
+		catch (IOException ex)
+		{
+			global::Logger.ActiveLogger.Log("An error occurred while reading the file: " + ex.Message);
+			text2 = null;
+		}
+		return text2;
+	}
+
+	public static void SaveMouseSpeed(float speed)
+	{
+		string text = "mouse_speed.mod";
+		string text2 = Path.Combine(Application.persistentDataPath, text);
+		try
+		{
+			using (StreamWriter streamWriter = new StreamWriter(text2))
+			{
+				streamWriter.Write(speed.ToString());
+			}
+			global::Logger.ActiveLogger.Log(string.Format("Saved mouse speed speed {0}", speed));
+		}
+		catch (IOException ex)
+		{
+			global::Logger.ActiveLogger.Log("An error occurred while writing the file " + text2 + ": " + ex.Message);
+		}
+	}
+
+	public static float ReadFloat(string filePath)
+	{
+		Path.Combine(Application.persistentDataPath, filePath);
+		string text = ModConfig.ReadString(filePath);
+		if (text == null)
+		{
+			return 0f;
+		}
+		float num;
+		if (float.TryParse(text, ref num))
+		{
+			return num;
+		}
+		global::Logger.ActiveLogger.Log("File does not contain a valid float.");
+		return 0f;
+	}
+
+	public static float mouse_speed;
+}

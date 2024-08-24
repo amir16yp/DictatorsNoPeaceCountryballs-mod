@@ -1,0 +1,16 @@
+--- decompiled_assembly/Assembly-CSharp/NukeCamera.cs	2024-08-25 01:50:00.553210300 +0300
++++ work/Assembly-CSharp/NukeCamera.cs	2024-08-25 01:50:01.077210100 +0300
+@@ -154,11 +154,10 @@
+ 
+ 	private void ZoomCamera(float offset)
+ 	{
+-		if (Mathf.Abs(offset) <= 0.01f)
++		if (Mathf.Abs(offset) > 0.01f)
+ 		{
+-			return;
++			this.cam.orthographicSize -= offset * this.zoomSpeedTouch * Time.deltaTime;
+ 		}
+-		this.cam.orthographicSize -= offset * this.zoomSpeedTouch * Time.deltaTime;
+ 	}
+ 
+ 	public void MoveCameraToRoyalCountry()

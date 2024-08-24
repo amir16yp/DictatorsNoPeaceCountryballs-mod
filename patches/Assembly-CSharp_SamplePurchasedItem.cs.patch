@@ -1,0 +1,11 @@
+--- decompiled_assembly/Assembly-CSharp/SamplePurchasedItem.cs	2024-08-25 01:50:00.673210200 +0300
++++ work/Assembly-CSharp/SamplePurchasedItem.cs	2024-08-25 01:50:01.188211000 +0300
+@@ -18,7 +18,7 @@
+ 
+ 	private void Update()
+ 	{
+-		this.unitsOwnedText.text = this.unitString + this.item.quantity;
++		this.unitsOwnedText.text = this.unitString + this.item.quantity.ToString();
+ 	}
+ 
+ 	[SerializeField]

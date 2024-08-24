@@ -1,0 +1,40 @@
+--- decompiled_assembly/Assembly-CSharp/NukeAdmin.cs	2024-08-25 01:50:00.550210900 +0300
++++ work/Assembly-CSharp/NukeAdmin.cs	2024-08-25 01:50:01.075210300 +0300
+@@ -64,23 +64,24 @@
+ 
+ 	private void PlayMusic()
+ 	{
+-		if (!this.musicSource.isPlaying)
++		if (this.musicSource.isPlaying)
+ 		{
+-			this.currentLoop++;
+-			if (this.currentLoop > this.musicFiles[this.songNum].loopCount)
++			return;
++		}
++		this.currentLoop++;
++		if (this.currentLoop > this.musicFiles[this.songNum].loopCount)
++		{
++			this.songNum++;
++			if (this.songNum >= this.musicFiles.Count)
+ 			{
+-				this.songNum++;
+-				if (this.songNum >= this.musicFiles.Count)
+-				{
+-					this.songNum = 0;
+-				}
+-				this.currentLoop = 1;
+-				this.musicSource.clip = this.musicFiles[this.songNum].musicFile;
+-				this.musicSource.PlayDelayed(5f);
+-				return;
++				this.songNum = 0;
+ 			}
+-			this.musicSource.PlayOneShot(this.musicFiles[this.songNum].musicFile);
++			this.currentLoop = 1;
++			this.musicSource.clip = this.musicFiles[this.songNum].musicFile;
++			this.musicSource.PlayDelayed(5f);
++			return;
+ 		}
++		this.musicSource.PlayOneShot(this.musicFiles[this.songNum].musicFile);
+ 	}
+ 
+ 	public void OpenInfoPanel(int id)

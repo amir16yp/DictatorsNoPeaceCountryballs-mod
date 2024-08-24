@@ -1,0 +1,10 @@
+--- decompiled_assembly/Assembly-CSharp/LevelChanger.cs	2024-08-25 01:50:00.449209400 +0300
++++ work/Assembly-CSharp/LevelChanger.cs	2024-08-25 01:50:00.984210400 +0300
+@@ -15,6 +15,7 @@
+ 
+ 	public void StartPlayScreen(string countryName, int colorIndex)
+ 	{
++		global::Logger.ActiveLogger.Log("Starting Playscreen with " + countryName);
+ 		GameSession.instance.selectedCountry = countryName;
+ 		GameSession.instance.colorIndex = colorIndex;
+ 		GameSession.instance.startNew = true;

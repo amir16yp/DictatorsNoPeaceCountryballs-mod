@@ -1,0 +1,111 @@
+--- decompiled_assembly/Assembly-CSharp/SampleSellItemPanel.cs	2024-08-25 01:50:00.686210000 +0300
++++ work/Assembly-CSharp/SampleSellItemPanel.cs	2024-08-25 01:50:01.201210400 +0300
+@@ -43,7 +43,7 @@
+ 			Item item2 = Caravan.instance.purchasedItemsList[i];
+ 			if (item.GetItemName().Equals(item2.GetItemName()))
+ 			{
+-				this.unitsPurchasedText.text = this.unitString + item2.GetQuantity();
++				this.unitsPurchasedText.text = this.unitString + item2.GetQuantity().ToString();
+ 				return;
+ 			}
+ 		}
+@@ -87,31 +87,32 @@
+ 
+ 	public void SellAllItems()
+ 	{
+-		if (this.item.quantity != 0)
++		if (this.item.quantity == 0)
+ 		{
+-			if (Caravan.instance.saleStatus == SaleStatus.STARTED && this.item.id == Caravan.instance.saleItemID)
+-			{
+-				Caravan.instance.saleStatus = SaleStatus.ENDED;
+-			}
+-			float num = 1f;
+-			float.TryParse(this.SPText.text, out num);
+-			CentralAdmin.instance.AddGold((float)this.item.quantity * num);
+-			if (num > this.myCostPrice)
+-			{
+-				this.profitGained = (float)this.item.quantity * num - this.item.totalCost;
+-				UIControl.instance.OpenReceiptPanel(LocalizationManager.instance.GetLocalizedValue("pro") + this.profitGained);
+-			}
+-			Caravan.instance.cargoFilled -= this.item.quantity;
+-			this.item.quantity = 0;
+-			this.item.totalCost = 0f;
+-			this.unitsPurchasedText.text = this.unitString + 0;
+-			for (int i = 0; i < Caravan.instance.purchasedItemsList.Count; i++)
++			return;
++		}
++		if (Caravan.instance.saleStatus == SaleStatus.STARTED && this.item.id == Caravan.instance.saleItemID)
++		{
++			Caravan.instance.saleStatus = SaleStatus.ENDED;
++		}
++		float num = 1f;
++		float.TryParse(this.SPText.text, ref num);
++		CentralAdmin.instance.AddGold((float)this.item.quantity * num);
++		if (num > this.myCostPrice)
++		{
++			this.profitGained = (float)this.item.quantity * num - this.item.totalCost;
++			UIControl.instance.OpenReceiptPanel(LocalizationManager.instance.GetLocalizedValue("pro") + this.profitGained.ToString());
++		}
++		Caravan.instance.cargoFilled -= this.item.quantity;
++		this.item.quantity = 0;
++		this.item.totalCost = 0f;
++		this.unitsPurchasedText.text = this.unitString + 0.ToString();
++		for (int i = 0; i < Caravan.instance.purchasedItemsList.Count; i++)
++		{
++			if (Caravan.instance.purchasedItemsList[i].GetItemName().Equals(this.item.GetItemName()))
+ 			{
+-				if (Caravan.instance.purchasedItemsList[i].GetItemName().Equals(this.item.GetItemName()))
+-				{
+-					Caravan.instance.purchasedItemsList.RemoveAt(i);
+-					return;
+-				}
++				Caravan.instance.purchasedItemsList.RemoveAt(i);
++				return;
+ 			}
+ 		}
+ 	}
+@@ -126,36 +127,36 @@
+ 			{
+ 				int quantity = item2.GetQuantity();
+ 				int num = 1;
+-				int.TryParse(countText, out num);
++				int.TryParse(countText, ref num);
+ 				if (quantity <= num)
+ 				{
+ 					float num2 = 1f;
+-					float.TryParse(sp, out num2);
++					float.TryParse(sp, ref num2);
+ 					CentralAdmin.instance.AddGold((float)quantity * num2);
+ 					if (num2 > this.myCostPrice)
+ 					{
+ 						this.profitGained = (num2 - this.myCostPrice) * (float)quantity;
+-						UIControl.instance.OpenReceiptPanel(LocalizationManager.instance.GetLocalizedValue("pro") + this.profitGained);
++						UIControl.instance.OpenReceiptPanel(LocalizationManager.instance.GetLocalizedValue("pro") + this.profitGained.ToString());
+ 					}
+ 					item.totalCost -= (float)quantity * this.myCostPrice;
+ 					Caravan.instance.cargoFilled -= quantity;
+ 					Caravan.instance.purchasedItemsList.RemoveAt(i);
+-					this.unitsPurchasedText.text = this.unitString + 0;
++					this.unitsPurchasedText.text = this.unitString + 0.ToString();
+ 					item.quantity = 0;
+ 					return;
+ 				}
+ 				float num3 = 1f;
+-				float.TryParse(sp, out num3);
++				float.TryParse(sp, ref num3);
+ 				CentralAdmin.instance.AddGold((float)num * num3);
+ 				if (num3 > this.myCostPrice)
+ 				{
+ 					this.profitGained = (num3 - this.myCostPrice) * (float)num;
+-					UIControl.instance.OpenReceiptPanel(LocalizationManager.instance.GetLocalizedValue("pro") + this.profitGained);
++					UIControl.instance.OpenReceiptPanel(LocalizationManager.instance.GetLocalizedValue("pro") + this.profitGained.ToString());
+ 				}
+ 				item.totalCost -= (float)num * this.myCostPrice;
+ 				Caravan.instance.cargoFilled -= num;
+ 				item.quantity -= num;
+-				this.unitsPurchasedText.text = this.unitString + item.GetQuantity();
++				this.unitsPurchasedText.text = this.unitString + item.GetQuantity().ToString();
+ 				return;
+ 			}
+ 			else

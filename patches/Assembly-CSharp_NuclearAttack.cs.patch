@@ -1,0 +1,209 @@
+--- decompiled_assembly/Assembly-CSharp/NuclearAttack.cs	2024-08-25 01:50:00.535210400 +0300
++++ work/Assembly-CSharp/NuclearAttack.cs	2024-08-25 01:50:01.064210100 +0300
+@@ -175,14 +175,7 @@
+ 		if (this.targetCountry.forArmyButton && this.targetCountry.forArmyButton.activeInHierarchy && !this.foreignArmyDefeated)
+ 		{
+ 			this.foreignArmyExists = true;
+-			if (this.strengthLeft < 50f)
+-			{
+-				num2 = this.strengthLeft;
+-			}
+-			else
+-			{
+-				num2 = 50f;
+-			}
++			num2 = ((this.strengthLeft >= 50f) ? 50f : this.strengthLeft);
+ 			if (num2 < this.targetCountry.foreignArmyStrength)
+ 			{
+ 				this.targetCountry.foreignArmyStrength -= num2;
+@@ -206,31 +199,29 @@
+ 			this.foreignArmyDefeated = true;
+ 		}
+ 		num2 = 50f - num;
+-		if (!flag && !this.armyDefeated)
++		if (flag || this.armyDefeated)
+ 		{
+-			this.armyExists = true;
+-			if (this.targetCountry.localArmyButton)
+-			{
+-				if (num2 > this.strengthLeft)
+-				{
+-					num2 = this.strengthLeft;
+-				}
+-				if (this.targetCountry.army.currentStrength > num2)
+-				{
+-					this.strengthLeft -= num2;
+-					this.targetCountry.army.currentStrength -= num2;
+-					return;
+-				}
+-				this.strengthLeft -= this.targetCountry.army.currentStrength;
+-				this.targetCountry.army.currentStrength = 0f;
+-				this.armyDefeated = true;
+-				return;
+-			}
+-			else
+-			{
+-				this.armyDefeated = true;
+-			}
++			return;
++		}
++		this.armyExists = true;
++		if (!this.targetCountry.localArmyButton)
++		{
++			this.armyDefeated = true;
++			return;
+ 		}
++		if (num2 > this.strengthLeft)
++		{
++			num2 = this.strengthLeft;
++		}
++		if (this.targetCountry.army.currentStrength > num2)
++		{
++			this.strengthLeft -= num2;
++			this.targetCountry.army.currentStrength -= num2;
++			return;
++		}
++		this.strengthLeft -= this.targetCountry.army.currentStrength;
++		this.targetCountry.army.currentStrength = 0f;
++		this.armyDefeated = true;
+ 	}
+ 
+ 	private void CalculateNavyDamage()
+@@ -241,14 +232,7 @@
+ 		if (this.targetCountry.forNavyButton && this.targetCountry.forNavyButton.activeInHierarchy && !this.foreignNavyDefeated)
+ 		{
+ 			this.foreignNavyExists = true;
+-			if (this.strengthLeft < 50f)
+-			{
+-				num2 = this.strengthLeft;
+-			}
+-			else
+-			{
+-				num2 = 50f;
+-			}
++			num2 = ((this.strengthLeft >= 50f) ? 50f : this.strengthLeft);
+ 			if (num2 < this.targetCountry.foreignNavyStrength)
+ 			{
+ 				this.targetCountry.foreignNavyStrength -= num2;
+@@ -272,31 +256,29 @@
+ 			this.foreignNavyDefeated = true;
+ 		}
+ 		num2 = 50f - num;
+-		if (!flag && !this.navyDefeated)
++		if (flag || this.navyDefeated)
+ 		{
+-			this.navyExists = true;
+-			if (this.targetCountry.localNavyButton)
+-			{
+-				if (num2 > this.strengthLeft)
+-				{
+-					num2 = this.strengthLeft;
+-				}
+-				if (this.targetCountry.navy.currentStrength > num2)
+-				{
+-					this.strengthLeft -= num2;
+-					this.targetCountry.navy.currentStrength -= num2;
+-					return;
+-				}
+-				this.strengthLeft -= this.targetCountry.navy.currentStrength;
+-				this.targetCountry.navy.currentStrength = 0f;
+-				this.navyDefeated = true;
+-				return;
+-			}
+-			else
+-			{
+-				this.navyDefeated = true;
+-			}
++			return;
++		}
++		this.navyExists = true;
++		if (!this.targetCountry.localNavyButton)
++		{
++			this.navyDefeated = true;
++			return;
++		}
++		if (num2 > this.strengthLeft)
++		{
++			num2 = this.strengthLeft;
+ 		}
++		if (this.targetCountry.navy.currentStrength > num2)
++		{
++			this.strengthLeft -= num2;
++			this.targetCountry.navy.currentStrength -= num2;
++			return;
++		}
++		this.strengthLeft -= this.targetCountry.navy.currentStrength;
++		this.targetCountry.navy.currentStrength = 0f;
++		this.navyDefeated = true;
+ 	}
+ 
+ 	private void CalculateAirForceDamage()
+@@ -307,14 +289,7 @@
+ 		if (this.targetCountry.forAirForceButton && this.targetCountry.forAirForceButton.activeInHierarchy && !this.foreignAirForceDefeated)
+ 		{
+ 			this.foreignAirForceExists = true;
+-			if (this.strengthLeft < 50f)
+-			{
+-				num2 = this.strengthLeft;
+-			}
+-			else
+-			{
+-				num2 = 50f;
+-			}
++			num2 = ((this.strengthLeft >= 50f) ? 50f : this.strengthLeft);
+ 			if (num2 < this.targetCountry.foreignAirForceStrength)
+ 			{
+ 				this.targetCountry.foreignAirForceStrength -= num2;
+@@ -338,31 +313,29 @@
+ 			this.foreignAirForceDefeated = true;
+ 		}
+ 		num2 = 50f - num;
+-		if (!flag && !this.airForceDefeated)
++		if (flag || this.airForceDefeated)
+ 		{
+-			this.airForceExists = true;
+-			if (this.targetCountry.localAirForceButton)
+-			{
+-				if (num2 > this.strengthLeft)
+-				{
+-					num2 = this.strengthLeft;
+-				}
+-				if (this.targetCountry.airForce.currentStrength > num2)
+-				{
+-					this.strengthLeft -= num2;
+-					this.targetCountry.airForce.currentStrength -= num2;
+-					return;
+-				}
+-				this.strengthLeft -= this.targetCountry.airForce.currentStrength;
+-				this.targetCountry.airForce.currentStrength = 0f;
+-				this.airForceDefeated = true;
+-				return;
+-			}
+-			else
+-			{
+-				this.airForceDefeated = true;
+-			}
++			return;
++		}
++		this.airForceExists = true;
++		if (!this.targetCountry.localAirForceButton)
++		{
++			this.airForceDefeated = true;
++			return;
++		}
++		if (num2 > this.strengthLeft)
++		{
++			num2 = this.strengthLeft;
++		}
++		if (this.targetCountry.airForce.currentStrength > num2)
++		{
++			this.strengthLeft -= num2;
++			this.targetCountry.airForce.currentStrength -= num2;
++			return;
+ 		}
++		this.strengthLeft -= this.targetCountry.airForce.currentStrength;
++		this.targetCountry.airForce.currentStrength = 0f;
++		this.airForceDefeated = true;
+ 	}
+ 
+ 	public NuclearAttack()

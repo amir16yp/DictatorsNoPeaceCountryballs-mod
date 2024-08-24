@@ -1,0 +1,11 @@
+--- decompiled_assembly/Assembly-CSharp/PinchZoom.cs	2024-08-25 01:50:00.583210300 +0300
++++ work/Assembly-CSharp/PinchZoom.cs	2024-08-25 01:50:01.093210100 +0300
+@@ -23,7 +23,7 @@
+ 	public PinchZoom()
+ 	{
+ 		this.defaultOrthoSpeed = 0.1f;
+-		this.orthoZoomSpeed = 0.1f;
++		this.orthoZoomSpeed = 0.3f;
+ 		base..ctor();
+ 	}
+ 

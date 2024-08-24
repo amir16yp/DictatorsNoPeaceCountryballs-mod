@@ -1,0 +1,20 @@
+--- decompiled_assembly/Assembly-CSharp/SampleProduction.cs	2024-08-25 01:50:00.668212500 +0300
++++ work/Assembly-CSharp/SampleProduction.cs	2024-08-25 01:50:01.176209900 +0300
+@@ -14,7 +14,7 @@
+ 		this.nameText.font = LocalizationManager.instance.selectedFont;
+ 		this.goldPerSecText.font = LocalizationManager.instance.selectedFont;
+ 		this.nameText.text = LocalizationManager.instance.GetLocalizedValue(act.name);
+-		this.builtText.text = act.built + "/" + act.max;
++		this.builtText.text = act.built.ToString() + "/" + act.max.ToString();
+ 		this.goldPerSecText.text = LocalizationManager.instance.GetLocalizedValue(this.increaseKey) + act.goldPerSec.ToString("0.##");
+ 		this.filledBar.fillAmount = (float)this.myAct.built / (float)this.myAct.max;
+ 		this.CheckBuildButton();
+@@ -41,7 +41,7 @@
+ 
+ 	public void UpdateDisplay()
+ 	{
+-		this.builtText.text = this.myAct.built + "/" + this.myAct.max;
++		this.builtText.text = this.myAct.built.ToString() + "/" + this.myAct.max.ToString();
+ 		this.filledBar.fillAmount = (float)this.myAct.built / (float)this.myAct.max;
+ 		this.CheckBuildButton();
+ 	}

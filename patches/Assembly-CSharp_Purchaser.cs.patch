@@ -1,0 +1,123 @@
+--- decompiled_assembly/Assembly-CSharp/Purchaser.cs	2024-08-25 01:50:00.613210500 +0300
++++ work/Assembly-CSharp/Purchaser.cs	2024-08-25 01:50:01.114210000 +0300
+@@ -12,15 +12,14 @@
+ 
+ 	public void InitializePurchasing()
+ 	{
+-		if (this.IsInitialized())
++		if (!this.IsInitialized())
+ 		{
+-			return;
++			ConfigurationBuilder configurationBuilder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance(), Array.Empty<IPurchasingModule>());
++			configurationBuilder.AddProduct(Purchaser.productIDGooglePurchase1, ProductType.NonConsumable);
++			configurationBuilder.AddProduct(Purchaser.productIDGooglePurchase2, ProductType.NonConsumable);
++			configurationBuilder.AddProduct(Purchaser.productIDGooglePurchase3, ProductType.NonConsumable);
++			UnityPurchasing.Initialize(this, configurationBuilder);
+ 		}
+-		ConfigurationBuilder configurationBuilder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance(), Array.Empty<IPurchasingModule>());
+-		configurationBuilder.AddProduct(Purchaser.productIDGooglePurchase1, ProductType.NonConsumable);
+-		configurationBuilder.AddProduct(Purchaser.productIDGooglePurchase2, ProductType.NonConsumable);
+-		configurationBuilder.AddProduct(Purchaser.productIDGooglePurchase3, ProductType.NonConsumable);
+-		UnityPurchasing.Initialize(this, configurationBuilder);
+ 	}
+ 
+ 	public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+@@ -33,7 +32,7 @@
+ 	public void OnInitializeFailed(InitializationFailureReason error)
+ 	{
+ 		GameSession.instance.PurchaseFailed(error.ToString());
+-		Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
++		Debug.Log("OnInitializeFailed InitializationFailureReason:" + error.ToString());
+ 	}
+ 
+ 	private bool IsInitialized()
+@@ -71,7 +70,7 @@
+ 		Product product = Purchaser.m_StoreController.products.WithID(productId);
+ 		if (product != null && product.availableToPurchase)
+ 		{
+-			Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
++			Debug.Log("Purchasing product asychronously: '" + product.definition.id + "'");
+ 			Purchaser.m_StoreController.InitiatePurchase(product);
+ 			return;
+ 		}
+@@ -94,29 +93,29 @@
+ 			});
+ 			return;
+ 		}
+-		Debug.Log("RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform);
++		Debug.Log("RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform.ToString());
+ 	}
+ 
+ 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
+ 	{
+-		if (string.Equals(args.purchasedProduct.definition.id, Purchaser.productIDGooglePurchase1, StringComparison.Ordinal))
++		if (string.Equals(args.purchasedProduct.definition.id, Purchaser.productIDGooglePurchase1, 4))
+ 		{
+-			Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
++			Debug.Log("ProcessPurchase: PASS. Product: '" + args.purchasedProduct.definition.id + "'");
+ 			GameSession.instance.PurchaseSuccessful();
+ 		}
+-		else if (string.Equals(args.purchasedProduct.definition.id, Purchaser.productIDGooglePurchase2, StringComparison.Ordinal))
++		else if (string.Equals(args.purchasedProduct.definition.id, Purchaser.productIDGooglePurchase2, 4))
+ 		{
+-			Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
++			Debug.Log("ProcessPurchase: PASS. Product: '" + args.purchasedProduct.definition.id + "'");
+ 			GameSession.instance.PurchaseSuccessful();
+ 		}
+-		else if (string.Equals(args.purchasedProduct.definition.id, Purchaser.productIDGooglePurchase3, StringComparison.Ordinal))
++		else if (string.Equals(args.purchasedProduct.definition.id, Purchaser.productIDGooglePurchase3, 4))
+ 		{
+-			Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));
++			Debug.Log("ProcessPurchase: PASS. Product: '" + args.purchasedProduct.definition.id + "'");
+ 			GameSession.instance.PurchaseSuccessful();
+ 		}
+ 		else
+ 		{
+-			Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
++			Debug.Log("ProcessPurchase: FAIL. Unrecognized product: '" + args.purchasedProduct.definition.id + "'");
+ 		}
+ 		return PurchaseProcessingResult.Complete;
+ 	}
+@@ -136,22 +135,28 @@
+ 
+ 	public string GetProductPriceFromStore(int tier)
+ 	{
+-		if (Purchaser.m_StoreController == null || Purchaser.m_StoreController.products == null)
+-		{
+-			this.InitializePurchasing();
+-			return "";
+-		}
+-		switch (tier)
++		if (Purchaser.m_StoreController != null && Purchaser.m_StoreController.products != null)
+ 		{
+-		case 1:
+-			return Purchaser.m_StoreController.products.WithID(Purchaser.productIDGooglePurchase1).metadata.localizedPriceString;
+-		case 2:
+-			return Purchaser.m_StoreController.products.WithID(Purchaser.productIDGooglePurchase2).metadata.localizedPriceString;
+-		case 3:
+-			return Purchaser.m_StoreController.products.WithID(Purchaser.productIDGooglePurchase3).metadata.localizedPriceString;
+-		default:
+-			return "";
++			string text;
++			switch (tier)
++			{
++			case 1:
++				text = Purchaser.m_StoreController.products.WithID(Purchaser.productIDGooglePurchase1).metadata.localizedPriceString;
++				break;
++			case 2:
++				text = Purchaser.m_StoreController.products.WithID(Purchaser.productIDGooglePurchase2).metadata.localizedPriceString;
++				break;
++			case 3:
++				text = Purchaser.m_StoreController.products.WithID(Purchaser.productIDGooglePurchase3).metadata.localizedPriceString;
++				break;
++			default:
++				text = "";
++				break;
++			}
++			return text;
+ 		}
++		this.InitializePurchasing();
++		return "";
+ 	}
+ 
+ 	// Note: this type is marked as 'beforefieldinit'.

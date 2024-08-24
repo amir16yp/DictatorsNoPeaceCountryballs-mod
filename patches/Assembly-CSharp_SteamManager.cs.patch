@@ -1,0 +1,84 @@
+--- decompiled_assembly/Assembly-CSharp/SteamManager.cs	2024-08-25 01:50:00.708210200 +0300
++++ work/Assembly-CSharp/SteamManager.cs	2024-08-25 01:50:01.225210500 +0300
+@@ -1,4 +1,5 @@
+ using System;
++using System.Runtime.CompilerServices;
+ using System.Text;
+ using Steamworks;
+ using UnityEngine;
+@@ -62,7 +63,9 @@
+ 		}
+ 		catch (DllNotFoundException ex)
+ 		{
+-			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n" + ex, this);
++			string text = "[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n";
++			DllNotFoundException ex2 = ex;
++			Debug.LogError(text + ((ex2 != null) ? ex2.ToString() : null), this);
+ 			Application.Quit();
+ 			return;
+ 		}
+@@ -81,38 +84,36 @@
+ 		{
+ 			SteamManager.s_instance = this;
+ 		}
+-		if (!this.m_bInitialized)
++		if (this.m_bInitialized && this.m_SteamAPIWarningMessageHook == null)
+ 		{
+-			return;
+-		}
+-		if (this.m_SteamAPIWarningMessageHook == null)
+-		{
+-			this.m_SteamAPIWarningMessageHook = new SteamAPIWarningMessageHook_t(SteamManager.SteamAPIDebugTextHook);
++			SteamAPIWarningMessageHook_t steamAPIWarningMessageHook_t;
++			if ((steamAPIWarningMessageHook_t = SteamManager.<>O.<0>__SteamAPIDebugTextHook) == null)
++			{
++				steamAPIWarningMessageHook_t = (SteamManager.<>O.<0>__SteamAPIDebugTextHook = new SteamAPIWarningMessageHook_t(SteamManager.SteamAPIDebugTextHook));
++			}
++			this.m_SteamAPIWarningMessageHook = steamAPIWarningMessageHook_t;
+ 			SteamClient.SetWarningMessageHook(this.m_SteamAPIWarningMessageHook);
+ 		}
+ 	}
+ 
+ 	protected virtual void OnDestroy()
+ 	{
+-		if (SteamManager.s_instance != this)
+-		{
+-			return;
+-		}
+-		SteamManager.s_instance = null;
+-		if (!this.m_bInitialized)
++		if (!(SteamManager.s_instance != this))
+ 		{
+-			return;
++			SteamManager.s_instance = null;
++			if (this.m_bInitialized)
++			{
++				SteamAPI.Shutdown();
++			}
+ 		}
+-		SteamAPI.Shutdown();
+ 	}
+ 
+ 	protected virtual void Update()
+ 	{
+-		if (!this.m_bInitialized)
++		if (this.m_bInitialized)
+ 		{
+-			return;
++			SteamAPI.RunCallbacks();
+ 		}
+-		SteamAPI.RunCallbacks();
+ 	}
+ 
+ 	protected static SteamManager s_instance;
+@@ -122,4 +123,10 @@
+ 	protected bool m_bInitialized;
+ 
+ 	protected SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
++
++	[CompilerGenerated]
++	private static class <>O
++	{
++		public static SteamAPIWarningMessageHook_t <0>__SteamAPIDebugTextHook;
++	}
+ }

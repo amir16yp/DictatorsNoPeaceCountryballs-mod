@@ -1,0 +1,36 @@
+--- decompiled_assembly/Assembly-CSharp/ColorSelectPanel.cs	2024-08-25 01:50:00.329209800 +0300
++++ work/Assembly-CSharp/ColorSelectPanel.cs	2024-08-25 01:50:00.881210200 +0300
+@@ -18,6 +18,19 @@
+ 		this.RefreshEverything();
+ 	}
+ 
++	public ColorSelectPanel()
++	{
++		this.mapWidth = 1f;
++		this.mapHeight = 1f;
++		this.allColors = ColorLoader.LoadColorsFromFile();
++		base..ctor();
++		foreach (Color color in ColorLoader.LoadColorsFromFile())
++		{
++			this.allColors.Add(color);
++			global::Logger.ActiveLogger.Log(string.Format("LOADED country color {0}.{1}.{2}", color.r, color.g, color.b));
++		}
++	}
++
+ 	public void RefreshEverything()
+ 	{
+ 		float width = this.backgroundImage.rectTransform.rect.width;
+@@ -81,13 +94,6 @@
+ 		base.gameObject.SetActive(false);
+ 	}
+ 
+-	public ColorSelectPanel()
+-	{
+-		this.mapWidth = 1f;
+-		this.mapHeight = 1f;
+-		base..ctor();
+-	}
+-
+ 	[SerializeField]
+ 	private Image backgroundImage;
+ 

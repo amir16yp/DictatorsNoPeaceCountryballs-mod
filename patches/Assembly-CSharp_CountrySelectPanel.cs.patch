@@ -1,0 +1,102 @@
+--- decompiled_assembly/Assembly-CSharp/CountrySelectPanel.cs	2024-08-25 01:50:00.353209600 +0300
++++ work/Assembly-CSharp/CountrySelectPanel.cs	2024-08-25 01:50:00.904210000 +0300
+@@ -1,5 +1,6 @@
+ using System;
+ using System.Collections.Generic;
++using System.Linq;
+ using TMPro;
+ using UnityEngine;
+ using UnityEngine.UI;
+@@ -24,9 +25,18 @@
+ 	public void SelectCountry(string newCountry, int id)
+ 	{
+ 		this.selectedCountryID = id;
+-		this.countryNameText.text = LocalizationManager.instance.GetLocalizedValue(this.countrySelectList[id].countryAb);
++		string text = LocalizationManager.instance.GetLocalizedValue(this.countrySelectList[id].countryAb);
++		if (string.IsNullOrEmpty(text))
++		{
++			text = newCountry;
++			global::Logger.ActiveLogger.Log("Localized country name not found for " + newCountry);
++		}
++		this.countryNameText.text = text;
+ 		this.flag.sprite = Resources.Load<Sprite>("CountryBalls/" + newCountry);
+ 		this.selectedCountry = newCountry;
++		global::Logger.ActiveLogger.Log("Selected Country: " + this.selectedCountry);
++		global::Logger.ActiveLogger.Log("Selected Country ID: " + this.selectedCountryID.ToString());
++		global::Logger.ActiveLogger.Log("Localized Country Name: " + text);
+ 	}
+ 
+ 	public void RefreshDisplay()
+@@ -45,15 +55,56 @@
+ 
+ 	public void AddAll()
+ 	{
+-		for (int i = 0; i < this.countryNames.Count; i++)
++		try
++		{
++			global::Logger.ActiveLogger.Log("Skipped creating custom country; not ready for production.");
++		}
++		catch (Exception ex)
++		{
++			global::Logger.ActiveLogger.Log("Trouble adding custom country!");
++			global::Logger.ActiveLogger.Log(ex.Message);
++			global::Logger.ActiveLogger.Log(ex.StackTrace);
++		}
++		try
++		{
++			for (int i = 0; i < this.countryNames.Count; i++)
++			{
++				string text = this.countryNames[i];
++				SampleCountryButton component = Object.Instantiate<GameObject>(this.countrySelectPrefab).GetComponent<SampleCountryButton>();
++				component.Setup(this.countrySelectList[i].countryAb, i, text);
++				component.transform.SetParent(this.contentPanel, false);
++			}
++		}
++		catch (Exception ex2)
+ 		{
+-			string text = this.countryNames[i];
+-			SampleCountryButton component = Object.Instantiate<GameObject>(this.countrySelectPrefab).GetComponent<SampleCountryButton>();
+-			component.Setup(this.countrySelectList[i].countryAb, i, text);
+-			component.transform.SetParent(this.contentPanel, false);
++			global::Logger.ActiveLogger.Log("Trouble listing countries!");
++			global::Logger.ActiveLogger.Log(ex2.Message);
++			global::Logger.ActiveLogger.Log(ex2.StackTrace);
+ 		}
+ 	}
+ 
++	private Country CreateCountryObject(string countryName, string countryMapName, string countryAb, Color? defaultColor = null, float? defaultArmyStrength = null, float? defaultNavyStrength = null, float? defaultAirForceStrength = null)
++	{
++		return new Country
++		{
++			countryAb = (string.IsNullOrEmpty(countryAb) ? "DefaultCountryAb" : countryAb),
++			countryName = (string.IsNullOrEmpty(countryName) ? "DefaultCountryName" : countryName),
++			originalCountryName = countryMapName,
++			id = Enumerable.Last<Country>(CentralAdmin.instance.allCountries).id + 1,
++			excessData = null,
++			color = (defaultColor ?? Color.white),
++			armyStrength = (defaultArmyStrength ?? 100f),
++			navyStrength = (defaultNavyStrength ?? 100f),
++			airForceStrength = (defaultAirForceStrength ?? 100f),
++			countryStatus = CountryStatus.ROYALEMPIRE
++		};
++	}
++
++	private void AddCountryToList(Country newCountryObject)
++	{
++		CentralAdmin.instance.allCountries.Add(newCountryObject);
++	}
++
+ 	public void StartGame()
+ 	{
+ 		if (SaveSystem.LoadCentralAdmin() != null)
+@@ -61,8 +112,9 @@
+ 			this.areYouSurePanel2.SetActive(true);
+ 			return;
+ 		}
++		ColorSelectPanel component = this.colorSelectPanel.GetComponent<ColorSelectPanel>();
+ 		this.colorSelectPanel.SetActive(true);
+-		this.colorSelectPanel.GetComponent<ColorSelectPanel>().SetData(this.countrySelectList[this.selectedCountryID].countryName, this.countrySelectList[this.selectedCountryID].countryMapName, this.countrySelectList[this.selectedCountryID].width, this.countrySelectList[this.selectedCountryID].height, this.countrySelectList[this.selectedCountryID].countryAb);
++		component.SetData(this.countrySelectList[this.selectedCountryID].countryName, this.countrySelectList[this.selectedCountryID].countryMapName, this.countrySelectList[this.selectedCountryID].width, this.countrySelectList[this.selectedCountryID].height, this.countrySelectList[this.selectedCountryID].countryAb);
+ 		this.areYouSurePanel2.SetActive(false);
+ 	}
+ 

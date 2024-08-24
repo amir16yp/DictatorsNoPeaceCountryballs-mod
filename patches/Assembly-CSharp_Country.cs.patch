@@ -1,0 +1,96 @@
+--- decompiled_assembly/Assembly-CSharp/Country.cs	2024-08-25 01:50:00.343209800 +0300
++++ work/Assembly-CSharp/Country.cs	2024-08-25 01:50:00.890209800 +0300
+@@ -52,15 +52,7 @@
+ 
+ 	public void LoadPrevious(bool normalLoad)
+ 	{
+-		CountryData countryData;
+-		if (normalLoad)
+-		{
+-			countryData = SaveSystem.LoadCountry(this);
+-		}
+-		else
+-		{
+-			countryData = SaveSystem.MinimizedLoadCountry(this);
+-		}
++		CountryData countryData = ((!normalLoad) ? SaveSystem.MinimizedLoadCountry(this) : SaveSystem.LoadCountry(this));
+ 		this.goldPerSec = countryData.goldPerSec;
+ 		for (int i = 0; i < this.productionActs.Count; i++)
+ 		{
+@@ -685,9 +677,7 @@
+ 	{
+ 		if (this.forArmyButton)
+ 		{
+-			float num = newArmyStrength / 2f;
+-			this.armyStrength = num;
+-			this.originalForeignArmyStrength = num;
++			this.originalForeignArmyStrength = (this.armyStrength = newArmyStrength / 2f);
+ 		}
+ 		else
+ 		{
+@@ -704,9 +694,7 @@
+ 	{
+ 		if (this.forArmyButton)
+ 		{
+-			float num = newArmy2Strength / 2f;
+-			this.armyStrength = num;
+-			this.originalForeignArmyStrength = num;
++			this.originalForeignArmyStrength = (this.armyStrength = newArmy2Strength / 2f);
+ 		}
+ 		else
+ 		{
+@@ -717,9 +705,7 @@
+ 		{
+ 			if (this.forNavyButton)
+ 			{
+-				float num2 = newOther2Strength / 2f;
+-				this.navyStrength = num2;
+-				this.originalForeignNavyStrength = num2;
++				this.originalForeignNavyStrength = (this.navyStrength = newOther2Strength / 2f);
+ 			}
+ 			else
+ 			{
+@@ -733,9 +719,7 @@
+ 		{
+ 			if (this.forAirForceButton)
+ 			{
+-				float num3 = newOther2Strength / 2f;
+-				this.airForceStrength = num3;
+-				this.originalForeignAirForceStrength = num3;
++				this.originalForeignAirForceStrength = (this.airForceStrength = newOther2Strength / 2f);
+ 			}
+ 			else
+ 			{
+@@ -751,9 +735,7 @@
+ 	{
+ 		if (this.forArmyButton)
+ 		{
+-			float num = newArmy3Strength / 2f;
+-			this.armyStrength = num;
+-			this.originalForeignArmyStrength = num;
++			this.originalForeignArmyStrength = (this.armyStrength = newArmy3Strength / 2f);
+ 		}
+ 		else
+ 		{
+@@ -764,9 +746,7 @@
+ 		{
+ 			if (this.forNavyButton)
+ 			{
+-				float num2 = newNavy2Strength / 2f;
+-				this.navyStrength = num2;
+-				this.originalForeignNavyStrength = num2;
++				this.originalForeignNavyStrength = (this.navyStrength = newNavy2Strength / 2f);
+ 			}
+ 			else
+ 			{
+@@ -778,9 +758,7 @@
+ 		{
+ 			if (this.forAirForceButton)
+ 			{
+-				float num3 = newAirForce2Strength / 2f;
+-				this.airForceStrength = num3;
+-				this.originalForeignAirForceStrength = num3;
++				this.originalForeignAirForceStrength = (this.airForceStrength = newAirForce2Strength / 2f);
+ 				return;
+ 			}
+ 			this.airForceStrength = newAirForce2Strength;

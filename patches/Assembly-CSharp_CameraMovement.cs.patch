@@ -1,0 +1,94 @@
+--- decompiled_assembly/Assembly-CSharp/CameraMovement.cs	2024-08-25 01:50:00.275209800 +0300
++++ work/Assembly-CSharp/CameraMovement.cs	2024-08-25 01:50:00.823210200 +0300
+@@ -25,6 +25,15 @@
+ 		this.camShake = base.GetComponent<CameraShake>();
+ 		this.camShake.enabled = false;
+ 		this.SetControls();
++		global::Logger.ActiveLogger.Log("Reading mouse speed");
++		ModConfig.ReadMouseSpeed();
++		this.mousePanSpeed = ModConfig.mouse_speed;
++	}
++
++	public void saveMouseSpeed(float x)
++	{
++		this.mousePanSpeed = x;
++		ModConfig.SaveMouseSpeed(x);
+ 	}
+ 
+ 	public void SetControls()
+@@ -63,12 +72,12 @@
+ 		}
+ 		else if (Input.GetKey(KeyCode.LeftArrow))
+ 		{
+-			Vector2 vector2 = new Vector2(-Time.deltaTime * num, 0f);
++			Vector2 vector2 = new Vector2((0f - Time.deltaTime) * num, 0f);
+ 			base.transform.Translate(vector2, Space.World);
+ 		}
+ 		if (Input.GetKey(KeyCode.DownArrow))
+ 		{
+-			Vector2 vector3 = new Vector2(0f, -Time.deltaTime * num);
++			Vector2 vector3 = new Vector2(0f, (0f - Time.deltaTime) * num);
+ 			base.transform.Translate(vector3, Space.World);
+ 			return;
+ 		}
+@@ -81,27 +90,17 @@
+ 
+ 	private void AdjustSpeeds()
+ 	{
+-		if (this.cam.orthographicSize <= 2.5f)
+-		{
+-			this.touchPanSpeed = 0.15f;
+-			return;
+-		}
+-		if (this.cam.orthographicSize <= 5f)
+-		{
+-			this.touchPanSpeed = 0.5f;
+-			return;
+-		}
+-		if (this.cam.orthographicSize <= 7f)
+-		{
+-			this.touchPanSpeed = 0.7f;
+-			return;
+-		}
+-		if (this.cam.orthographicSize <= 12f)
++		float[] array = new float[] { 2.5f, 5f, 7f, 12f };
++		float[] array2 = new float[] { 0.15f, 0.5f, 0.7f, 1f, 2f };
++		for (int i = 0; i < array.Length - 1; i++)
+ 		{
+-			this.touchPanSpeed = 1f;
+-			return;
++			if (this.cam.orthographicSize <= array[i + 1])
++			{
++				float num = Mathf.InverseLerp(array[i], array[i + 1], this.cam.orthographicSize);
++				this.touchPanSpeed = Mathf.Lerp(array2[i], array2[i + 1], num) * this.mousePanSpeed;
++				return;
++			}
+ 		}
+-		this.touchPanSpeed = 2f;
+ 	}
+ 
+ 	public void MoveCameraToRoyalCountry()
+@@ -177,11 +176,10 @@
+ 
+ 	private void ZoomCamera(float offset)
+ 	{
+-		if (Mathf.Abs(offset) <= 0.01f)
++		if (Mathf.Abs(offset) > 0.01f)
+ 		{
+-			return;
++			this.cam.orthographicSize -= offset * this.zoomSpeedTouch * Time.deltaTime;
+ 		}
+-		this.cam.orthographicSize -= offset * this.zoomSpeedTouch * Time.deltaTime;
+ 	}
+ 
+ 	private void HandleMouse()
+@@ -282,8 +280,7 @@
+ 	public CameraMovement()
+ 	{
+ 		this.zoomSize = 3f;
+-		this.touchPanSpeed = 1f;
+-		this.mousePanSpeed = 5f;
++		this.touchPanSpeed = 10f;
+ 		this.zoomSpeedTouch = 1f;
+ 		base..ctor();
+ 	}

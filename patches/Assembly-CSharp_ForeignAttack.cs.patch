@@ -1,0 +1,87 @@
+--- decompiled_assembly/Assembly-CSharp/ForeignAttack.cs	2024-08-25 01:50:00.392210400 +0300
++++ work/Assembly-CSharp/ForeignAttack.cs	2024-08-25 01:50:00.938210100 +0300
+@@ -203,8 +203,12 @@
+ 				return;
+ 			}
+ 		}
+-		else if (this.foreignWarStatus == ForeignWarStatus.ATWAR)
++		else
+ 		{
++			if (this.foreignWarStatus != ForeignWarStatus.ATWAR)
++			{
++				return;
++			}
+ 			if (!this.startExplosions)
+ 			{
+ 				this.StartExplosions();
+@@ -215,33 +219,34 @@
+ 				this.rotateMilitary = true;
+ 			}
+ 			this.currWarTimeCount += Time.deltaTime;
+-			if (this.currWarTimeCount >= this.warTimeFactor)
++			if (this.currWarTimeCount < this.warTimeFactor)
+ 			{
+-				this.currWarTimeCount = 0f;
+-				if (this.HasWarEnded())
+-				{
+-					if (this.armyWonWar && this.navyWonWar && this.airForceWonWar)
+-					{
+-						this.wonWar = true;
+-					}
+-					else
+-					{
+-						this.wonWar = false;
+-					}
+-					this.EndWar();
+-				}
+-				if (!this.hasArmyWarEnded)
+-				{
+-					this.SimulateArmyWar();
+-				}
+-				if (!this.hasNavyWarEnded)
++				return;
++			}
++			this.currWarTimeCount = 0f;
++			if (this.HasWarEnded())
++			{
++				if (this.armyWonWar && this.navyWonWar && this.airForceWonWar)
+ 				{
+-					this.SimulateNavyWar();
++					this.wonWar = true;
+ 				}
+-				if (!this.hasAirForceWarEnded)
++				else
+ 				{
+-					this.SimulateAirForceWar();
++					this.wonWar = false;
+ 				}
++				this.EndWar();
++			}
++			if (!this.hasArmyWarEnded)
++			{
++				this.SimulateArmyWar();
++			}
++			if (!this.hasNavyWarEnded)
++			{
++				this.SimulateNavyWar();
++			}
++			if (!this.hasAirForceWarEnded)
++			{
++				this.SimulateAirForceWar();
+ 			}
+ 		}
+ 	}
+@@ -422,12 +427,8 @@
+ 
+ 	private void CheckIfReached()
+ 	{
+-		if (this.currentWaypoint >= this.path.vectorPath.Count)
++		if (this.currentWaypoint >= this.path.vectorPath.Count && !this.pathIsEnded)
+ 		{
+-			if (this.pathIsEnded)
+-			{
+-				return;
+-			}
+ 			Debug.Log("End of path reached.");
+ 			this.pathIsEnded = true;
+ 			this.hasReachedTargetCountry = true;
